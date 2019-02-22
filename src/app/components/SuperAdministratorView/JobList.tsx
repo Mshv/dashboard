@@ -16,12 +16,10 @@ import {
 import * as React from "react";
 import axios from "axios";
 import { red } from "@material-ui/core/colors";
-import { withRouter,Route } from "react-router-dom";
-import Job from "./Job";
-
+import { withRouter, Route } from "react-router-dom";
 
 const urlPostJobs =
-  "http://localhost:8080/axiata-security-gateway-1.0/job/all";
+  "http://10.11.120.106:8080/axiata-security-gateway-1.0/job/all";
 
 // create a styles object using a theme. The createStyles function is
 // needed to placate the TS compiler.
@@ -37,7 +35,7 @@ const styles = (theme: Theme) =>
     },
     icon: {
       margin: theme.spacing.unit * 2
-    },
+    }
     // specific: {
     //   width: "1%"
     // }
@@ -94,7 +92,7 @@ class JobList extends React.Component<any, any> {
     });
   }
   componentDidMount() {
-   // this.getJobs();
+    this.getJobs();
   }
 
   getJobs(): any {
@@ -142,7 +140,7 @@ class JobList extends React.Component<any, any> {
                   }}
                 />
               </CustomTableCell>
-            </TableRow> 
+            </TableRow>
           </TableHead>
           <TableBody>
             {this.state.jobs.map(row => {
@@ -152,7 +150,7 @@ class JobList extends React.Component<any, any> {
                   <CustomTableCell>{row.customer}</CustomTableCell>
                   <CustomTableCell>{row.usecaseName}</CustomTableCell>
                   <CustomTableCell>{row.usecaseDescription}</CustomTableCell>
-                  <CustomTableCell style={{ width: "17%" }} ></CustomTableCell>
+                  <CustomTableCell style={{ width: "17%" }} />
                 </TableRow>
               );
             })}

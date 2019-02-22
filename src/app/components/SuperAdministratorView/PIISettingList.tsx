@@ -20,7 +20,7 @@ import { withRouter, Route } from "react-router-dom";
 import Job from "./Job";
 
 const urlPostPIISettingList =
-  "http://localhost:8080/axiata-security-gateway-1.0/pii/settings/all";
+  "http://10.11.120.106:8080/axiata-security-gateway-1.0/pii/settings/all";
 
 const styles = (theme: Theme) =>
   createStyles({

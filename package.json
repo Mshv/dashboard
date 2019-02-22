@@ -29,6 +29,7 @@
     "randomcolor": "^0.5.3",
     "react": "^16.7.0",
     "react-component-queries": "^2.3.0",
+    "react-cron-builder": "^1.0.3",
     "react-dom": "^16.7.0",
     "react-icons": "^2.2.7",
     "react-icons-kit": "^1.2.1",
