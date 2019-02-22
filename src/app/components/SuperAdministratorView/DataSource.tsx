@@ -41,22 +41,20 @@ import { FormErrors } from "./../FormErrors";
 import { Validation, fieldValidatorCore } from "react-validation-framework";
 
 
-const urlPostDataSourceCategories =
-  "http://localhost:8080/axiata-security-gateway-1.0/datasource/categories";
-  const urlPostDataSourceTypes =
-  "http://localhost:8080/axiata-security-gateway-1.0/datasource/types";
-  const urlPostdataSourceCreate =
-  "http://localhost:8080/axiata-security-gateway-1.0/datasource/create";
-  const urlPostdataSourceAll =
-  "http://localhost:8080/axiata-security-gateway-1.0/datasource/all";
-  const urlPostdataSourceByID =
-  "http://localhost:8080/axiata-security-gateway-1.0/datasource/id";
 // const urlPostDataSourceCategories =
-//   "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/categories";
-// const urlPostDataSourceTypes =
-//   "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/types";
+//   "http://localhost:8080/axiata-security-gateway-1.0/datasource/categories";
+//   const urlPostDataSourceTypes =
+//   "http://localhost:8080/axiata-security-gateway-1.0/datasource/types";
 //   const urlPostdataSourceCreate =
-//   "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/create";
+//   "http://localhost:8080/axiata-security-gateway-1.0/datasource/create";
+  const urlPostdataSourceByID =
+  "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/id";
+const urlPostDataSourceCategories =
+  "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/categories";
+const urlPostDataSourceTypes =
+  "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/types";
+  const urlPostdataSourceCreate =
+  "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/create";
 
 const urlGetTablesInfo = "http://localhost:8080/getTablesInfo";
 const urlGetColumnsInfo = "http://localhost:8080/getColumnsInfo";

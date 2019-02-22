@@ -34,44 +34,30 @@ import ModalPanelScheduler from "./ModalPanelScheduler";
 import PropTypes from "prop-types";
 import axios from "axios";
 
-// const urlPostdataSources =
-//   "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/all";
-
-// const urlPostTables =
-//   "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/tables";
-
-// const urlPostColumns =
-//   "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/columns";
-
-// const urlPostSchemas =
-//   "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/schemas";
-
-// const urlPostAddSettings = "http://10.11.120.106:8080/pii-mapping-1.0/pii/settings/add";
-
 const urlPostdataSources =
-  "http://localhost:8080/axiata-security-gateway-1.0/datasource/all";
+  "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/all";
 
 const urlPostTables =
-  "http://localhost:8080/axiata-security-gateway-1.0/datasource/tables";
+  "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/tables";
 
 const urlPostColumns =
-  "http://localhost:8080/axiata-security-gateway-1.0/datasource/columns";
+  "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/columns";
 
 const urlPostSchemas =
-  "http://localhost:8080/axiata-security-gateway-1.0/datasource/schemas";
+  "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/schemas";
 
-const urlPostAddSettings = "http://localhost:8080/pii-mapping-1.0/pii/settings/add";
+const urlPostCreatePIISettings =
+  "http://10.11.120.106:8080/pii-mapping-1.0/pii/settings/add";
 
 const urlPostFindllPIISettingsByKey =
-"http://localhost:8080/axiata-security-gateway-1.0/pii/settings/find/key";
+  "http://localhost:8080/axiata-security-gateway-1.0/pii/settings/find/key";
 
 const urlPostFindllPIISettingsByType =
-"http://localhost:8080/axiata-security-gateway-1.0/pii/settings/find/type";
+  "http://localhost:8080/axiata-security-gateway-1.0/pii/settings/find/type";
 
 // const styles = createStyles({
 const styles = (theme: Theme) =>
   createStyles({
-
     root: {
       minHeight: "50vh",
       // display: 'flex',
@@ -86,9 +72,7 @@ const styles = (theme: Theme) =>
     formControl: {
       //  margin: theme.spacing.unit,
       minWidth: 180,
-      marginLeft: 20,
-
-    
+      marginLeft: 20
     },
 
     "@media (min-width: 960px)": {
@@ -151,7 +135,6 @@ class PIISetting extends React.Component<any, any> {
   handleClose = () => {
     this.setState({ open: false });
     this.props.history.push("/configurationList");
-
   };
 
   componentWillMount() {}
@@ -258,7 +241,7 @@ class PIISetting extends React.Component<any, any> {
         console.log(error);
       });
   };
-  
+
   handleTableChange = (event: any) => {
     this.setState({ selectedTable: event.target.value }, function() {
       console.log("selectedTable: " + this.state.selectedTable);
@@ -363,7 +346,7 @@ class PIISetting extends React.Component<any, any> {
     formSubmitEvent.preventDefault(); //this function is used to stop the page refresh
     console.log(sendData);
     axios
-      .post(urlPostAddSettings, sendData)
+      .post(urlPostCreatePIISettings, sendData)
       .then(response => {
         console.log(response);
         if (response.data.event.eventStatus === "OK") {
@@ -403,129 +386,131 @@ class PIISetting extends React.Component<any, any> {
 
     return (
       <form className={classes.container}>
-      <div className={classes.root}>
-        <Grid container spacing={24}>
-          <Grid item xs="auto">
-            <div>
-              <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="age-native-helper">Data Source</InputLabel>
-                <NativeSelect
-                  value={this.state.selectedDataSource}
-                  onChange={e => this.handleDatasourceChange(e)}
-                  required
-                >
-                  {this.state.dataSourceCategories.map(item => (
-                    <option
-                      key={item.dsId}
-                      label={item.dsName}
-                      value={item.dsId}
-                    />
-                  ))}
-                </NativeSelect>
-                <FormHelperText>Select Data Source</FormHelperText>
-              </FormControl>
-            </div>
-          </Grid>
-          <Grid item xs="auto">
-            <div>
-              <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="age-native-helper">
-                  DataSource Schema
-                </InputLabel>
-                <NativeSelect
-                  value={this.state.selectedSchema}
-                  onChange={e => this.handleSchemaChange(e)}
-                  required
-                >
-                  {this.state.schemas.map(item => (
-                    <option
-                      // key={item.schemaName}
-                      label={item.schemaName}
-                      value={item.schemaName}
-                    />
-                  ))}
-                </NativeSelect>
-                <FormHelperText>Select Data Source Schema</FormHelperText>
-              </FormControl>
-            </div>
-          </Grid>
-          <Grid item xs={8} />
-          <Grid item xs="auto" />
-          <Grid item xs="auto" />
-          <Grid item xs={12} />
-          <Grid item xs="auto">
-            <div>
-              <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="age-native-helper">
-                  Data Store Parameter
-                </InputLabel>
-                <NativeSelect
-                  value={this.state.selectedTable}
-                  onChange={e => this.handleTableChange(e)}
-                  required
-                >
-                  {this.state.tables.map(item => (
-                    <option
-                      //key={item.tableName}
-                      label={item.tableName}
-                      value={item.tableName}
-                    />
-                  ))}
-                </NativeSelect>
-                <FormHelperText>Select Data Store Parameter</FormHelperText>
-              </FormControl>
-            </div>
-          </Grid>
-          <Grid item xs="auto">
-            <div>
-              <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="age-native-helper">PII Key</InputLabel>
-                <NativeSelect
-                  value={this.state.selectedColumn}
-                  onChange={e => this.handleColumnChange(e)}
-                  required
-                >
-                  {this.state.columns.map(item => (
-                    <option
-                      // key={item.columnName}
-                      label={item.columnName}
-                      value={item.columnName}
-                    /> 
-                  ))}
-                </NativeSelect>
-                <FormHelperText>Select PII Key</FormHelperText>
-              </FormControl>
-            </div>
-          </Grid>
-          <Grid item xs={8} />
-          <Grid item xs="auto" />
-          <Grid item xs="auto" />
-          <Grid item xs={12} />
-          <Grid item xs="auto">
-            <div>
-              <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="age-native-helper">PII Type</InputLabel>
-                <NativeSelect
-                  value={this.state.selectedPIIType}
-                  onChange={e => this.handlePIITypeChange(e)}
-                  required
-                >
-                  <option value="" />
-                  <option value={"MSISDN"}>MSISDN</option>
-                  <option value={"EMAIL"}>Email</option>
-                  <option value={"IP"}>IP</option>
-                  <option value={"CUSTOMER_NAME"}>Customer Name</option>
-                  <option value={"EMI"}>EMI</option>
-                  <option value={"IMSI"}>IMSI</option>
-                  <option value={"ADDRESS"}>Address</option>
-                </NativeSelect>
-                <FormHelperText>Select PII Type</FormHelperText>
-              </FormControl>
-            </div>
-          </Grid>
-          <Grid item xs="auto">
-            <div>
-              {/* <FormControl className={classes.formControl} disabled>
+        <div className={classes.root}>
+          <Grid container spacing={24}>
+            <Grid item xs="auto">
+              <div>
+                <FormControl className={classes.formControl}>
+                  <InputLabel htmlFor="age-native-helper">
+                    Data Source
+                  </InputLabel>
+                  <NativeSelect
+                    value={this.state.selectedDataSource}
+                    onChange={e => this.handleDatasourceChange(e)}
+                    required
+                  >
+                    {this.state.dataSourceCategories.map(item => (
+                      <option
+                        key={item.dsId}
+                        label={item.dsName}
+                        value={item.dsId}
+                      />
+                    ))}
+                  </NativeSelect>
+                  <FormHelperText>Select Data Source</FormHelperText>
+                </FormControl>
+              </div>
+            </Grid>
+            <Grid item xs="auto">
+              <div>
+                <FormControl className={classes.formControl}>
+                  <InputLabel htmlFor="age-native-helper">
+                    DataSource Schema
+                  </InputLabel>
+                  <NativeSelect
+                    value={this.state.selectedSchema}
+                    onChange={e => this.handleSchemaChange(e)}
+                    required
+                  >
+                    {this.state.schemas.map(item => (
+                      <option
+                        // key={item.schemaName}
+                        label={item.schemaName}
+                        value={item.schemaName}
+                      />
+                    ))}
+                  </NativeSelect>
+                  <FormHelperText>Select Data Source Schema</FormHelperText>
+                </FormControl>
+              </div>
+            </Grid>
+            <Grid item xs={8} />
+            <Grid item xs="auto" />
+            <Grid item xs="auto" />
+            <Grid item xs={12} />
+            <Grid item xs="auto">
+              <div>
+                <FormControl className={classes.formControl}>
+                  <InputLabel htmlFor="age-native-helper">
+                    Data Store Parameter
+                  </InputLabel>
+                  <NativeSelect
+                    value={this.state.selectedTable}
+                    onChange={e => this.handleTableChange(e)}
+                    required
+                  >
+                    {this.state.tables.map(item => (
+                      <option
+                        //key={item.tableName}
+                        label={item.tableName}
+                        value={item.tableName}
+                      />
+                    ))}
+                  </NativeSelect>
+                  <FormHelperText>Select Data Store Parameter</FormHelperText>
+                </FormControl>
+              </div>
+            </Grid>
+            <Grid item xs="auto">
+              <div>
+                <FormControl className={classes.formControl}>
+                  <InputLabel htmlFor="age-native-helper">PII Key</InputLabel>
+                  <NativeSelect
+                    value={this.state.selectedColumn}
+                    onChange={e => this.handleColumnChange(e)}
+                    required
+                  >
+                    {this.state.columns.map(item => (
+                      <option
+                        // key={item.columnName}
+                        label={item.columnName}
+                        value={item.columnName}
+                      />
+                    ))}
+                  </NativeSelect>
+                  <FormHelperText>Select PII Key</FormHelperText>
+                </FormControl>
+              </div>
+            </Grid>
+            <Grid item xs={8} />
+            <Grid item xs="auto" />
+            <Grid item xs="auto" />
+            <Grid item xs={12} />
+            <Grid item xs="auto">
+              <div>
+                <FormControl className={classes.formControl}>
+                  <InputLabel htmlFor="age-native-helper">PII Type</InputLabel>
+                  <NativeSelect
+                    value={this.state.selectedPIIType}
+                    onChange={e => this.handlePIITypeChange(e)}
+                    required
+                  >
+                    <option value="" />
+                    <option value={"MSISDN"}>MSISDN</option>
+                    <option value={"EMAIL"}>Email</option>
+                    <option value={"IP"}>IP</option>
+                    <option value={"CUSTOMER_NAME"}>Customer Name</option>
+                    <option value={"EMI"}>EMI</option>
+                    <option value={"IMSI"}>IMSI</option>
+                    <option value={"ADDRESS"}>Address</option>
+                  </NativeSelect>
+                  <FormHelperText>Select PII Type</FormHelperText>
+                </FormControl>
+              </div>
+            </Grid>
+            <Grid item xs="auto">
+              <div>
+                {/* <FormControl className={classes.formControl} disabled>
                 <InputLabel htmlFor="native-disabled">Name</InputLabel>
                 <NativeSelect
                   value={this.state.selectedSecurityType}
@@ -543,144 +528,151 @@ class PIISetting extends React.Component<any, any> {
                 </NativeSelect>
                 <FormHelperText>Disabled</FormHelperText>
               </FormControl> */}
-              <FormControl className={classes.formControl} disabled>
-                <InputLabel htmlFor="age-native-helper">
-                  Security Type
-                </InputLabel>
-                <NativeSelect
-                  value={this.state.selectedSecurityType}
-                  onChange={e => this.handleSecurityTypeChange(e)}
-                  // name="selectedSecurityType" 
-                  // input={<Input id="selectedSecurityType-native-disabled" />}
-                >
-                  {/* <option value="" /> */}
-                  <option value={"HASH"}>Hash</option>
-                  <option value={"ENCRYPTION"}>Encryption</option>
-                </NativeSelect>
-                <FormHelperText>Select Security Type</FormHelperText>
-              </FormControl>
-            </div>
-          </Grid>
-          <Grid item xs={8} />
-          <Grid item xs="auto" />
-          <Grid item xs="auto" />
-          <Grid item xs={12} />
-          <Grid item xs="auto">
-            <div>
-              <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="age-native-helper">
-                  Security Key Type
-                </InputLabel>
-                <NativeSelect
-                  value={this.state.selectedSecurityKeyType}
-                  onChange={e => this.handleSecurityKeyTypeChange(e)}
-                  required
-                >
-                  <option value="" />
-                  <option value={"SHA1"}>SHA1</option>
-                  <option value={"SHA256"}>SHA256</option>
-                  <option value={"SHA384"}>SHA384</option>
-                  <option value={"SHA528"}>SHA528</option>
-                </NativeSelect>
-                <FormHelperText>Select Security Key Type</FormHelperText>
-              </FormControl>
-            </div>
-          </Grid>
-          <Grid item xs="auto">
-            <div>
-              <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="age-native-helper">
-                  Security Reference
-                </InputLabel>
-                <NativeSelect
-                  value={this.state.selectedSecurityRefrence}
-                  onChange={e => this.handleSecurityRefrenceChange(e)}
-                  required
-                >
-                  <option value="" />
-                  <option value={1}>Key Reference 1</option>
-                  <option value={2}>Key Reference 2</option>
-                </NativeSelect>
-                <FormHelperText>Select Security Key Reference</FormHelperText>
-              </FormControl>
-            </div>
-          </Grid>
-          <Grid item xs={8} />
-          <Grid item xs="auto" />
-          <Grid item xs="auto" />
-          <Grid item xs={12} />
-          <Grid item xs="auto">
-            {/* <ModalPanelScheduler /> */}
-{/*             0 10 0,1,2,3,4,5,10,11,12,1,2,13,14,15,16,17,18,19,20,21,22,23 ? * SUN,MON,TUE,WED,THU,FRI,SAT *
- */}            <div>
-              <FormControl className={classes.formControl}>
-                <MuiThemeProvider theme={theme}>
-                  <TextField
-                    className={classes.margin}
-                    label="Mapping Trigger Schedule"
-                    variant="outlined"
-                    id="mui-theme-provider-outlined-input-mapping-trigger"
-                    value={this.state.mappingTriggerSchedule}
-                    onChange={this.handleChange("mappingTriggerSchedule")}
+                <FormControl className={classes.formControl} disabled>
+                  <InputLabel htmlFor="age-native-helper">
+                    Security Type
+                  </InputLabel>
+                  <NativeSelect
+                    value={this.state.selectedSecurityType}
+                    onChange={e => this.handleSecurityTypeChange(e)}
+                    // name="selectedSecurityType"
+                    // input={<Input id="selectedSecurityType-native-disabled" />}
+                  >
+                    {/* <option value="" /> */}
+                    <option value={"HASH"}>Hash</option>
+                    <option value={"ENCRYPTION"}>Encryption</option>
+                  </NativeSelect>
+                  <FormHelperText>Select Security Type</FormHelperText>
+                </FormControl>
+              </div>
+            </Grid>
+            <Grid item xs={8} />
+            <Grid item xs="auto" />
+            <Grid item xs="auto" />
+            <Grid item xs={12} />
+            <Grid item xs="auto">
+              <div>
+                <FormControl className={classes.formControl}>
+                  <InputLabel htmlFor="age-native-helper">
+                    Security Key Type
+                  </InputLabel>
+                  <NativeSelect
+                    value={this.state.selectedSecurityKeyType}
+                    onChange={e => this.handleSecurityKeyTypeChange(e)}
                     required
-                  />
-                </MuiThemeProvider>
-                <FormHelperText>Seconds	Minutes	Hours	Day-Of-Month	Month	Day-Of-Week	Year</FormHelperText>
+                  >
+                    <option value="" />
+                    <option value={"SHA1"}>SHA1</option>
+                    <option value={"SHA256"}>SHA256</option>
+                    <option value={"SHA384"}>SHA384</option>
+                    <option value={"SHA528"}>SHA528</option>
+                  </NativeSelect>
+                  <FormHelperText>Select Security Key Type</FormHelperText>
+                </FormControl>
+              </div>
+            </Grid>
+            <Grid item xs="auto">
+              <div>
+                <FormControl className={classes.formControl}>
+                  <InputLabel htmlFor="age-native-helper">
+                    Security Reference
+                  </InputLabel>
+                  <NativeSelect
+                    value={this.state.selectedSecurityRefrence}
+                    onChange={e => this.handleSecurityRefrenceChange(e)}
+                    required
+                  >
+                    <option value="" />
+                    <option value={1}>Key Reference 1</option>
+                    <option value={2}>Key Reference 2</option>
+                  </NativeSelect>
+                  <FormHelperText>Select Security Key Reference</FormHelperText>
+                </FormControl>
+              </div>
+            </Grid>
+            <Grid item xs={8} />
+            <Grid item xs="auto" />
+            <Grid item xs="auto" />
+            <Grid item xs={12} />
+            <Grid item xs="auto">
+              {/* <ModalPanelScheduler /> */}
+              {/*             0 10 0,1,2,3,4,5,10,11,12,1,2,13,14,15,16,17,18,19,20,21,22,23 ? * SUN,MON,TUE,WED,THU,FRI,SAT *
+               */}{" "}
+              <div>
+                <FormControl className={classes.formControl}>
+                  <MuiThemeProvider theme={theme}>
+                    <TextField
+                      className={classes.margin}
+                      label="Mapping Trigger Schedule"
+                      variant="outlined"
+                      id="mui-theme-provider-outlined-input-mapping-trigger"
+                      value={this.state.mappingTriggerSchedule}
+                      onChange={this.handleChange("mappingTriggerSchedule")}
+                      required
+                    />
+                  </MuiThemeProvider>
+                  <FormHelperText>
+                    Seconds Minutes Hours Day-Of-Month Month Day-Of-Week Year
+                  </FormHelperText>
 
-                <FormHelperText>0 10 0,1,2,3,4,5,10,11,12,1,2,13,14,15,16,17,18,19,20,21,22,23 ? * SUN,MON,TUE,WED,THU,FRI,SAT *</FormHelperText>
-              </FormControl>
-            </div>
+                  <FormHelperText>
+                    0 10
+                    0,1,2,3,4,5,10,11,12,1,2,13,14,15,16,17,18,19,20,21,22,23 ?
+                    * SUN,MON,TUE,WED,THU,FRI,SAT *
+                  </FormHelperText>
+                </FormControl>
+              </div>
+            </Grid>
+            <Grid item xs={8} />
+            <Grid item xs="auto" />
+            <Grid item xs="auto" />
+            <Grid item xs={12} />
+            <Grid item xs="auto">
+              <Button
+                variant="contained"
+                size="small"
+                className={classes.button}
+                type="submit"
+                onClick={this.handleFormSubmit}
+              >
+                <SendIcon />
+                Submit
+              </Button>
+            </Grid>
+            <Grid item xs="auto">
+              <Button
+                variant="contained"
+                size="small"
+                className={classes.submit}
+                onClick={this.handleFormReset}
+              >
+                <SendIcon />
+                Reset
+              </Button>
+            </Grid>
+            <Grid item xs={12} />
           </Grid>
-          <Grid item xs={8} />
-          <Grid item xs="auto" />
-          <Grid item xs="auto" />
-          <Grid item xs={12} />
-          <Grid item xs="auto">
-            <Button
-              variant="contained"
-              size="small"
-              className={classes.button}
-              type="submit"
-              onClick={this.handleFormSubmit}
-            >
-              <SendIcon />
-              Submit
-            </Button>
-          </Grid>
-          <Grid item xs="auto">
-            <Button
-              variant="contained"
-              size="small"
-              className={classes.submit}
-              onClick={this.handleFormReset}
-            >
-              <SendIcon />
-              Reset
-            </Button>
-          </Grid>
-          <Grid item xs={12} />
-        </Grid>
-        <Dialog
-          open={this.state.open}
-          onClose={this.handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">
-            {"Data Source Setting"}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              Data Source Setting is submitted successfully.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Okay
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
+          <Dialog
+            open={this.state.open}
+            onClose={this.handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"Data Source Setting"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Data Source Setting is submitted successfully.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.handleClose} color="primary">
+                Okay
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
       </form>
     );
   }

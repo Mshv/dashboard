@@ -15,9 +15,7 @@ import {
 } from "@material-ui/core";
 import * as React from "react";
 import axios from "axios";
-import { red } from "@material-ui/core/colors";
 import { withRouter,Route } from "react-router-dom";
-import DataSource from "./DataSource";
 
 let id = 0;
 const createData = (name, calories, fat, carbs, protein) => {
@@ -25,8 +23,9 @@ const createData = (name, calories, fat, carbs, protein) => {
   return { id, name, calories, fat, carbs, protein };
 };
 
+
 const urlPostdataSourceAll =
-  "http://localhost:8080/axiata-security-gateway-1.0/datasource/all";
+  "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/all";
 
 // create a styles object using a theme. The createStyles function is
 // needed to placate the TS compiler.

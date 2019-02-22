@@ -29,31 +29,20 @@ import CheckboxComponent from "../CheckboxComponent";
 import * as Collections from "typescript-collections";
 import axios from "axios";
 
-// const urlPostdataSources =
-//   "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/all";
-
-// const urlPostTables =
-//   "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/tables";
-
-// const urlPostColumns =
-//   "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/columns";
-
-// const urlPostJobCreate = "http://10.11.120.106:8080/job/create";
-
 const urlPostdataSources =
-  "http://localhost:8080/axiata-security-gateway-1.0/datasource/all";
+  "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/all";
 
 const urlPostSchemas =
-  "http://localhost:8080/axiata-security-gateway-1.0/datasource/schemas";
+  "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/schemas";
 
 const urlPostTables =
-  "http://localhost:8080/axiata-security-gateway-1.0/datasource/tables";
+  "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/tables";
 
 const urlPostColumns =
-  "http://localhost:8080/axiata-security-gateway-1.0/datasource/columns";
+  "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/columns";
 
 const urlPostJobCreate =
-  "http://localhost:8080/axiata-security-gateway-1.0/job/create";
+  "http://10.11.120.106:8080/axiata-security-gateway-1.0/job/create";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -110,7 +99,7 @@ class ManageDataAnonymizationJob extends React.Component<any, any> {
 
       mappingTriggerSchedule: "",
       outputFormat: "",
-
+      maxRecordSize: "",
       open: false,
 
       textmask: "    .    .    .    ",
@@ -129,7 +118,6 @@ class ManageDataAnonymizationJob extends React.Component<any, any> {
   handleClose = () => {
     this.setState({ open: false });
     this.props.history.push("/jobList");
-
   };
 
   componentWillMount() {
@@ -309,11 +297,15 @@ class ManageDataAnonymizationJob extends React.Component<any, any> {
         datasource: {
           dsId: this.state.selectedDataSource
         },
-        schemaName: this.state.selectedSchema,
+        schema: this.state.selectedSchema,
         table: this.state.selectedTable,
-        columns: this.state.selectedCheckboxes.toString().replace('[','').replace(']',''),
+        columns: this.state.selectedCheckboxes
+          .toString()
+          .replace("[", "")
+          .replace("]", ""),
         jobSchedule: this.state.mappingTriggerSchedule,
         outputFormat: this.state.outputFormat,
+        maxRecordSize: this.state.maxRecordSize,
         createdBy: 1
       }
     };
@@ -349,6 +341,8 @@ class ManageDataAnonymizationJob extends React.Component<any, any> {
     this.setState({ columns: [] });
     this.setState({ mappingTriggerSchedule: "" });
     this.setState({ outputFormat: "" });
+    this.setState({ maxRecordSize: "" });
+
     this.getDataSourceInfo();
   }
 
@@ -411,6 +405,12 @@ class ManageDataAnonymizationJob extends React.Component<any, any> {
       console.log("outputFormat: " + this.state.outputFormat);
     });
   };
+  handleMaxRecordSizeChange = (event: any) => {
+    this.setState({ maxRecordSize: event.target.value }, function() {
+      console.log("maxRecordSize: " + this.state.maxRecordSize);
+    });
+  };
+
   handleChange = prop => event => {
     this.setState({ [prop]: event.target.value });
   };
@@ -498,7 +498,23 @@ class ManageDataAnonymizationJob extends React.Component<any, any> {
             <Grid item xs="auto" />
             <Grid item xs="auto" />
             <Grid item xs={12} />
-
+            <Grid item xs="auto">
+              <div>
+                <FormControl className={classes.formControl}>
+                  <MuiThemeProvider theme={theme}>
+                    <TextField
+                      className={classes.margin}
+                      type="number"
+                      label="Max Record Size"
+                      variant="outlined"
+                      id="mui-theme-provider-outlined-input-maxRecordSize"
+                      value={this.state.maxRecordSize}
+                      onChange={e => this.handleMaxRecordSizeChange(e)}
+                    />
+                  </MuiThemeProvider>
+                </FormControl>
+              </div>
+            </Grid>
             <Grid item xs="auto">
               <div>
                 <FormControl className={classes.formControl}>
