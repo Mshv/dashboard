@@ -20,7 +20,7 @@ import Settings from "@material-ui/icons/Settings";
 import DataUsage from "@material-ui/icons/DataUsage";
 import HomeIcon from "@material-ui/icons/Home";
 import Assessment from "@material-ui/icons/Assessment";
-import { grey } from "@material-ui/core/colors";
+import { grey, red } from "@material-ui/core/colors";
 
 import DataSource from "./SuperAdministratorView/DataSource";
 import PIISetting from "./SuperAdministratorView/PIISetting";
@@ -33,6 +33,7 @@ import DataSourceList from "./SuperAdministratorView/DataSourceList";
 import SystemLogs from "./SuperAdministratorView/SystemLogs";
 import Administrators from "./SuperAdministratorView/Administrators";
 // import drawerImage from "./../../images/Axiata_Logo.png";
+import classNames from 'classnames';
 
 const drawerWidth = 240;
 
@@ -41,7 +42,7 @@ const styles = theme => ({
     display: "flex"
   },
   appBar: {
-    zIndex: theme.zIndex.drawer + 1
+    zIndex: theme.zIndex.drawer + 1,
   },
   menuButton: {
     flexGrow: 1,
@@ -49,15 +50,19 @@ const styles = theme => ({
   },
   drawer: {
     width: drawerWidth,
-    flexShrink: 0
+    flexShrink: 0,
   },
-  drawerPaper: {
+  rightToolbar: {
+    marginLeft: 'auto',
+    marginRight: -8,
+  },
+/*   drawerPaper: {
     width: drawerWidth,
     backgroundImage: "url(" + require("./../../images/homeEdit.jpg") + ")",
     backgroundRepeat: "no-repeat",
     backgroundSize: "270px",
-    backgroundPosition: "center"
-  },
+    backgroundPosition: "center"    
+  }, */
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3
@@ -111,18 +116,22 @@ class ClippedDrawer extends React.Component<any, any> {
         <AppBar
           position="fixed"
           className={classes.appBar}
-          style={{ backgroundColor: "grey" }}
+          style={{ backgroundColor: "grey", backgroundImage: 'linear-gradient(to right, rgba(0,0,0,0.2), rgba(191, 191, 191, 1))' }}          
         >
           <Toolbar>
+
+            <Typography variant="h6" color="inherit" noWrap>
+              Data Annonymization
+              {/* <Button color="inherit" id="login" onClick={this.handleFormLogout} className={classes.menuButton}>Logout</Button> */}
+            </Typography>
+
+            <section className={classes.rightToolbar}>
             <img
               height="50px"
               width="80px"
               src={require("../../images/Axiata_Logo.png")}
             />
-            <Typography variant="h6" color="inherit" noWrap>
-              Data Annonymization
-              {/* <Button color="inherit" id="login" onClick={this.handleFormLogout} className={classes.menuButton}>Logout</Button> */}
-            </Typography>
+            </section>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -139,7 +148,7 @@ class ClippedDrawer extends React.Component<any, any> {
               button
             >
               <ListItemIcon>
-                <HomeIcon />
+                <HomeIcon  color="primary" />
               </ListItemIcon>
               <ListItemText primary="Home" />
             </ListItem>
@@ -149,7 +158,7 @@ class ClippedDrawer extends React.Component<any, any> {
               button
             >
               <ListItemIcon>
-                <DataUsage />
+                <DataUsage  color="secondary"/>
               </ListItemIcon>
               <ListItemText primary="Data Source" />
             </ListItem>
@@ -159,7 +168,7 @@ class ClippedDrawer extends React.Component<any, any> {
               button
             >
               <ListItemIcon>
-                <Settings />
+                <Settings style={{color: 'black'}} />
               </ListItemIcon>
               <ListItemText primary="Configuration" />
             </ListItem>
@@ -169,21 +178,21 @@ class ClippedDrawer extends React.Component<any, any> {
               button
             >
               <ListItemIcon>
-                <Assessment />
+                <Assessment  color="error"/>
               </ListItemIcon>
               <ListItemText primary="Job" />
             </ListItem>
 
             <ListItem component={props => <Link to="/systemLogs" {...props} />} button>
               <ListItemIcon>
-                <InboxIcon />
+                <InboxIcon style={{color: 'orange'}} />
               </ListItemIcon>
               <ListItemText primary="System Logs" />
             </ListItem>
 
             <ListItem component={props => <Link to="/administrators" {...props} />} button>
               <ListItemIcon>
-                <AssignmentInd />
+                <AssignmentInd  style={{color: 'black'}}/>
               </ListItemIcon>
               <ListItemText primary="Administrators" />
             </ListItem>
@@ -218,7 +227,7 @@ class ClippedDrawer extends React.Component<any, any> {
             ))} */}
           </List>
         </Drawer>
-        <main className={classes.content}>
+        <main className={classes.content} >
           <div className={classes.toolbar} />
           <Switch>
     

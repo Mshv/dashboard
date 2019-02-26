@@ -156,14 +156,15 @@ class ManageDataAnonymizationJob extends React.Component<any, any> {
       console.log(
         " Before - selectedDataSource: " + this.state.selectedDataSource
       );
-
       /* Clear other related elements */
       this.setState({ schemas: [] });
+      this.setState({ selectedSchema: "" });
       this.setState({ tables: [] });
       this.setState({ selectedTable: "" });
       this.setState({ columns: [] });
       this.setState({ selectedCheckboxes: new Collections.Set() });
 
+      if(this.state.selectedDataSource !== ""){
       const sendData = {
         event: {},
         data: {
@@ -187,14 +188,15 @@ class ManageDataAnonymizationJob extends React.Component<any, any> {
         .catch(function(error) {
           console.log(error);
         });
+      }
     });
   };
 
   handleSchemaChange = (event: any) => {
     this.setState({ selectedSchema: event.target.value }, function() {
       console.log("selectedSchema: " + this.state.selectedSchema);
-    });
-    /* Clear other related elements */
+
+      /* Clear other related elements */
     this.setState({ tables: [] });
     this.setState({ selectedTable: "" });
     this.setState({ columns: [] });
@@ -211,6 +213,7 @@ class ManageDataAnonymizationJob extends React.Component<any, any> {
         ]
       }
     };
+    console.log("handleSchemaChange");
     console.log(sendData);
     axios
       .post(urlPostTables, sendData)
@@ -228,6 +231,8 @@ class ManageDataAnonymizationJob extends React.Component<any, any> {
       .catch(function(error) {
         console.log(error);
       });
+    });
+    
   };
 
   handleTableChange = (event: any) => {
