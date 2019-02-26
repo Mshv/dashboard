@@ -283,13 +283,13 @@ class DataSource extends React.Component<any, any> {
     const sendData = {
       event: {},
       data: {
-        dsTypeId: this.state.selectedDataSourceCategory,
+        dsTypeId: this.state.selectedDataSourceType,
         dsIdentifier: this.state.identifier,
         dsName: this.state.dataSourceName,
         dsIp: this.state.ip,
         dsPort: this.state.port,
         driver: this.state.driver,
-        protocol: this.state.protocol + ":" + this.state.protocolType,
+        protocol: this.state.protocol,
         version: this.state.version,
         dsUser: this.state.user,
         password: this.state.password,

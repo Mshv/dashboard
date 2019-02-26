@@ -47,7 +47,7 @@ const urlPostSchemas =
   "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/schemas";
 
 const urlPostCreatePIISettings =
-  "http://10.11.120.106:8080/pii-mapping-1.0/pii/settings/add";
+  "http://10.11.120.105:8080/pii-mapping-1.0/pii/settings/add";
 
 const urlPostFindllPIISettingsByKey =
   "http://localhost:8080/axiata-security-gateway-1.0/pii/settings/find/key";
