@@ -29,21 +29,6 @@ import CheckboxComponent from "../CheckboxComponent";
 import * as Collections from "typescript-collections";
 import axios from "axios";
 
-const urlPostdataSources =
-  "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/all";
-
-const urlPostSchemas =
-  "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/schemas";
-
-const urlPostTables =
-  "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/tables";
-
-const urlPostColumns =
-  "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/columns";
-
-const urlPostJobCreate =
-  "http://10.11.120.106:8080/axiata-security-gateway-1.0/job/create";
-
 const styles = (theme: Theme) =>
   createStyles({
     container: {
@@ -133,7 +118,7 @@ class ManageDataAnonymizationJob extends React.Component<any, any> {
       data: {}
     };
     axios
-      .post(urlPostdataSources, sendData)
+      .post(process.env.POST_DATASOURCES, sendData)
       .then(response => {
         console.log(response.data.data);
         this.setState({
@@ -156,6 +141,7 @@ class ManageDataAnonymizationJob extends React.Component<any, any> {
       console.log(
         " Before - selectedDataSource: " + this.state.selectedDataSource
       );
+      console.log(process.env.POST_SCHEMAS);
       /* Clear other related elements */
       this.setState({ schemas: [] });
       this.setState({ selectedSchema: "" });
@@ -173,7 +159,7 @@ class ManageDataAnonymizationJob extends React.Component<any, any> {
       };
       console.log(sendData);
       axios
-        .post(urlPostSchemas, sendData)
+        .post(process.env.POST_SCHEMAS, sendData)
         .then(response => {
           if (response != null) {
             console.log(response.data.data.schemas);
@@ -216,7 +202,7 @@ class ManageDataAnonymizationJob extends React.Component<any, any> {
     console.log("handleSchemaChange");
     console.log(sendData);
     axios
-      .post(urlPostTables, sendData)
+      .post(process.env.POST_TABLES, sendData)
       .then(response => {
         if (response != null) {
           console.log(response);
@@ -259,7 +245,7 @@ class ManageDataAnonymizationJob extends React.Component<any, any> {
       console.log("inside: " + sendData);
       var list = [];
       axios
-        .post(urlPostColumns, sendData)
+        .post(process.env.POST_COLUMNS, sendData)
         .then(response => {
           response.data.data.map(function(column) {
             list.push(column.columnName);
@@ -317,7 +303,7 @@ class ManageDataAnonymizationJob extends React.Component<any, any> {
     formSubmitEvent.preventDefault(); //this function is used to stop the page refresh
     console.log(sendData);
     axios
-      .post(urlPostJobCreate, sendData)
+      .post(process.env.POST_JOB_CREATE, sendData)
       .then(response => {
         console.log(response);
         if (response.data.event.eventStatus === "OK") {
@@ -578,9 +564,9 @@ class ManageDataAnonymizationJob extends React.Component<any, any> {
                     onChange={e => this.handleSchemaChange(e)}
                     required
                   >
-                    {this.state.schemas.map(item => (
+                    {this.state.schemas.map((item,index) => (
                       <option
-                        // key={item.schemaName}
+                        key={index}
                         label={item.schemaName}
                         value={item.schemaName}
                       />

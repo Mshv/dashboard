@@ -19,9 +19,6 @@ import { red } from "@material-ui/core/colors";
 import { withRouter, Route } from "react-router-dom";
 import Job from "./Job";
 
-const urlPostPIISettingList =
-  "http://10.11.120.106:8080/axiata-security-gateway-1.0/pii/settings/all";
-
 const styles = (theme: Theme) =>
   createStyles({
     root: {
@@ -92,7 +89,7 @@ class PIISettingList extends React.Component<any, any> {
     };
 
     axios
-      .post(urlPostPIISettingList, sendData)
+      .post(process.env.POST_PII_SETTINGS, sendData)
       .then(response => {
         this.setState({ pIISettingList: response.data.data });
         console.log("pIISettingList");

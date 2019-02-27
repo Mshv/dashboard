@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "5dec4ca1141b845f4fc9";
+/******/ 	var hotCurrentHash = "5fc3da05e2e7ef111b38";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -88111,27 +88111,27 @@ class ClippedDrawer extends React.Component {
                 React.createElement(List_1.default, null,
                     React.createElement(ListItem_1.default, { component: props => React.createElement(react_router_dom_1.Link, Object.assign({ to: "/Home" }, props)), button: true },
                         React.createElement(ListItemIcon_1.default, null,
-                            React.createElement(Home_1.default, null)),
+                            React.createElement(Home_1.default, { color: "primary" })),
                         React.createElement(ListItemText_1.default, { primary: "Home" })),
                     React.createElement(ListItem_1.default, { component: props => React.createElement(react_router_dom_1.Link, Object.assign({ to: "/dataSourceList" }, props)), button: true },
                         React.createElement(ListItemIcon_1.default, null,
-                            React.createElement(DataUsage_1.default, null)),
+                            React.createElement(DataUsage_1.default, { color: "secondary" })),
                         React.createElement(ListItemText_1.default, { primary: "Data Source" })),
                     React.createElement(ListItem_1.default, { component: props => React.createElement(react_router_dom_1.Link, Object.assign({ to: "/configurationList" }, props)), button: true },
                         React.createElement(ListItemIcon_1.default, null,
-                            React.createElement(Settings_1.default, null)),
+                            React.createElement(Settings_1.default, { style: { color: 'black' } })),
                         React.createElement(ListItemText_1.default, { primary: "Configuration" })),
                     React.createElement(ListItem_1.default, { component: props => React.createElement(react_router_dom_1.Link, Object.assign({ to: "/jobList" }, props)), button: true },
                         React.createElement(ListItemIcon_1.default, null,
-                            React.createElement(Assessment_1.default, null)),
+                            React.createElement(Assessment_1.default, { color: "error" })),
                         React.createElement(ListItemText_1.default, { primary: "Job" })),
                     React.createElement(ListItem_1.default, { component: props => React.createElement(react_router_dom_1.Link, Object.assign({ to: "/systemLogs" }, props)), button: true },
                         React.createElement(ListItemIcon_1.default, null,
-                            React.createElement(MoveToInbox_1.default, null)),
+                            React.createElement(MoveToInbox_1.default, { style: { color: 'orange' } })),
                         React.createElement(ListItemText_1.default, { primary: "System Logs" })),
                     React.createElement(ListItem_1.default, { component: props => React.createElement(react_router_dom_1.Link, Object.assign({ to: "/administrators" }, props)), button: true },
                         React.createElement(ListItemIcon_1.default, null,
-                            React.createElement(AssignmentInd_1.default, null)),
+                            React.createElement(AssignmentInd_1.default, { style: { color: 'black' } })),
                         React.createElement(ListItemText_1.default, { primary: "Administrators" }))),
                 React.createElement(Divider_1.default, null),
                 React.createElement(List_1.default, null,
@@ -88320,7 +88320,7 @@ exports.default = Root;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(process) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const Avatar_1 = __webpack_require__(/*! @material-ui/core/Avatar */ "./node_modules/@material-ui/core/Avatar/index.js");
@@ -88338,45 +88338,46 @@ const core_1 = __webpack_require__(/*! @material-ui/core */ "./node_modules/@mat
 const react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 const styles = (theme) => core_1.createStyles({
     main: {
-        width: 'auto',
-        display: 'block',
+        width: "auto",
+        display: "block",
         marginLeft: theme.spacing.unit * 3,
         marginRight: theme.spacing.unit * 3,
         [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
             width: 400,
-            marginLeft: 'auto',
-            marginRight: 'auto',
-        },
+            marginLeft: "auto",
+            marginRight: "auto"
+        }
     },
     paper: {
         marginTop: theme.spacing.unit * 8,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme
+            .spacing.unit * 3}px`
     },
     avatar: {
         margin: theme.spacing.unit,
-        backgroundColor: theme.palette.secondary.main,
+        backgroundColor: theme.palette.secondary.main
     },
     form: {
-        width: '100%',
-        marginTop: theme.spacing.unit,
+        width: "100%",
+        marginTop: theme.spacing.unit
     },
     submit: {
-        marginTop: theme.spacing.unit * 3,
-    },
+        marginTop: theme.spacing.unit * 3
+    }
 });
 class SignIn extends React.Component {
     constructor(props) {
         super(props);
         this.handleFormSubmit = formSubmitEvent => {
-            console.log(formSubmitEvent.userName);
-            console.log(' Sign in button is clicked ....', ' UserName ....', this.state.userName, 'Password ....', this.state.password);
-            if (this.state.userName !== '' && this.state.password !== '') {
-                if (this.state.userName === 'admin') {
+            console.log(" Sign in button is clicked ....", " UserName ....", this.state.userName, "Password ....", this.state.password);
+            console.log(process.env.REACT_APP_DEV_API_URL);
+            if (this.state.userName !== "" && this.state.password !== "") {
+                if (this.state.userName === "admin") {
                     this.state = { isAuthenticated: true };
-                    localStorage.setItem('isAuthenticated', this.state.isAuthenticated === true ? "1" : "0");
+                    localStorage.setItem("isAuthenticated", this.state.isAuthenticated === true ? "1" : "0");
                     this.props.history.push("/dashboard");
                 }
                 else {
@@ -88387,14 +88388,14 @@ class SignIn extends React.Component {
         this.state = {
             userName: "",
             password: "",
-            isAuthenticated: false,
+            isAuthenticated: false
         };
         this.userNameKepUp = this.userNameKepUp.bind(this);
         this.passwordKepUp = this.passwordKepUp.bind(this);
     }
     componentWillMount() {
         this.props.history.listen(() => {
-            console.log(' << New URL >>', this.props.history.location.pathname);
+            console.log(" << New URL >>", this.props.history.location.pathname);
         });
     }
     userNameKepUp(ev) {
@@ -88425,8 +88426,9 @@ class SignIn extends React.Component {
                     React.createElement(Button_1.default, { type: "submit", fullWidth: true, variant: "contained", color: "primary", className: classes.submit, onClick: this.handleFormSubmit }, "Sign in")))));
     }
 }
-exports.default = react_router_dom_1.withRouter((core_1.withStyles(styles)(SignIn)));
+exports.default = react_router_dom_1.withRouter(core_1.withStyles(styles)(SignIn));
 
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../node_modules/process/browser.js */ "./node_modules/process/browser.js")))
 
 /***/ }),
 
@@ -88477,12 +88479,6 @@ const colors_1 = __webpack_require__(/*! @material-ui/core/colors */ "./node_mod
 const Visibility_1 = __webpack_require__(/*! @material-ui/icons/Visibility */ "./node_modules/@material-ui/icons/Visibility.js");
 const VisibilityOff_1 = __webpack_require__(/*! @material-ui/icons/VisibilityOff */ "./node_modules/@material-ui/icons/VisibilityOff.js");
 const FormErrors_1 = __webpack_require__(/*! ./../FormErrors */ "./src/app/components/FormErrors.tsx");
-const urlPostdataSourceByID = "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/id";
-const urlPostDataSourceCategories = "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/categories";
-const urlPostDataSourceTypes = "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/types";
-const urlPostdataSourceCreate = "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/create";
-const urlGetTablesInfo = "http://localhost:8080/getTablesInfo";
-const urlGetColumnsInfo = "http://localhost:8080/getColumnsInfo";
 const styles = createStyles_1.default({
     root: {
         minHeight: "50vh",
@@ -88569,7 +88565,7 @@ class DataSource extends React.Component {
                     }
                 };
                 axios_1.default
-                    .post(urlPostDataSourceTypes, sendData)
+                    .post("http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/types", sendData)
                     .then(response => {
                     console.log("urlPostDataSourceTypes");
                     console.log(response.data.data);
@@ -88614,7 +88610,7 @@ class DataSource extends React.Component {
             formSubmitEvent.preventDefault();
             console.log(sendData);
             axios_1.default
-                .post(urlPostdataSourceCreate, sendData)
+                .post("http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/create", sendData)
                 .then(response => {
                 console.log(response);
                 if (response.data.event.eventStatus === "OK") {
@@ -88664,7 +88660,7 @@ class DataSource extends React.Component {
             data: {}
         };
         axios_1.default
-            .post(urlPostDataSourceCategories, sendData)
+            .post("http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/categories", sendData)
             .then(response => {
             this.setState({
                 dataSourceCategories: [{ dsCategory: "", categoryId: "" }].concat(response.data.data)
@@ -88818,7 +88814,7 @@ exports.default = styles_1.withStyles(styles)(DataSource);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(process) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/index.es.js");
 const React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
@@ -88829,7 +88825,6 @@ const createData = (name, calories, fat, carbs, protein) => {
     id += 1;
     return { id, name, calories, fat, carbs, protein };
 };
-const urlPostdataSourceAll = "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/all";
 const styles = (theme) => core_1.createStyles({
     root: {
         width: "90%",
@@ -88880,7 +88875,7 @@ class DataSourceList extends React.Component {
             data: {}
         };
         axios_1.default
-            .post(urlPostdataSourceAll, sendData)
+            .post(process.env.POST_DATASOURCE_ALL, sendData)
             .then(response => {
             this.setState({ dataSources: response.data.data });
             console.log("dataSources");
@@ -88917,6 +88912,7 @@ class DataSourceList extends React.Component {
 }
 exports.default = react_router_dom_1.withRouter(core_1.withStyles(styles)(DataSourceList));
 
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../node_modules/process/browser.js */ "./node_modules/process/browser.js")))
 
 /***/ }),
 
@@ -88944,11 +88940,6 @@ const colors_1 = __webpack_require__(/*! @material-ui/core/colors */ "./node_mod
 const CheckboxComponent_1 = __webpack_require__(/*! ../CheckboxComponent */ "./src/app/components/CheckboxComponent.tsx");
 const Collections = __webpack_require__(/*! typescript-collections */ "./node_modules/typescript-collections/dist/lib/index.js");
 const axios_1 = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-const urlPostdataSources = "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/all";
-const urlPostSchemas = "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/schemas";
-const urlPostTables = "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/tables";
-const urlPostColumns = "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/columns";
-const urlPostJobCreate = "http://10.11.120.106:8080/axiata-security-gateway-1.0/job/create";
 const styles = (theme) => createStyles_1.default({
     container: {
         display: "grid",
@@ -88995,6 +88986,7 @@ class ManageDataAnonymizationJob extends React.Component {
         this.handleDatasourceChange = (event) => {
             this.setState({ selectedDataSource: event.target.value }, function () {
                 console.log(" Before - selectedDataSource: " + this.state.selectedDataSource);
+                console.log("http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/schemas");
                 this.setState({ schemas: [] });
                 this.setState({ selectedSchema: "" });
                 this.setState({ tables: [] });
@@ -89010,7 +89002,7 @@ class ManageDataAnonymizationJob extends React.Component {
                     };
                     console.log(sendData);
                     axios_1.default
-                        .post(urlPostSchemas, sendData)
+                        .post("http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/schemas", sendData)
                         .then(response => {
                         if (response != null) {
                             console.log(response.data.data.schemas);
@@ -89050,7 +89042,7 @@ class ManageDataAnonymizationJob extends React.Component {
                 console.log("handleSchemaChange");
                 console.log(sendData);
                 axios_1.default
-                    .post(urlPostTables, sendData)
+                    .post("http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/tables", sendData)
                     .then(response => {
                     if (response != null) {
                         console.log(response);
@@ -89091,7 +89083,7 @@ class ManageDataAnonymizationJob extends React.Component {
                 console.log("inside: " + sendData);
                 var list = [];
                 axios_1.default
-                    .post(urlPostColumns, sendData)
+                    .post("http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/columns", sendData)
                     .then(response => {
                     response.data.data.map(function (column) {
                         list.push(column.columnName);
@@ -89144,7 +89136,7 @@ class ManageDataAnonymizationJob extends React.Component {
             formSubmitEvent.preventDefault();
             console.log(sendData);
             axios_1.default
-                .post(urlPostJobCreate, sendData)
+                .post("http://10.11.120.106:8080/axiata-security-gateway-1.0/job/create", sendData)
                 .then(response => {
                 console.log(response);
                 if (response.data.event.eventStatus === "OK") {
@@ -89243,7 +89235,7 @@ class ManageDataAnonymizationJob extends React.Component {
             data: {}
         };
         axios_1.default
-            .post(urlPostdataSources, sendData)
+            .post("http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/all", sendData)
             .then(response => {
             console.log(response.data.data);
             this.setState({
@@ -89332,7 +89324,7 @@ class ManageDataAnonymizationJob extends React.Component {
                         React.createElement("div", null,
                             React.createElement(FormControl_1.default, { className: classes.formControl },
                                 React.createElement(InputLabel_1.default, { htmlFor: "age-native-helper" }, "DataSource Schema"),
-                                React.createElement(NativeSelect_1.default, { value: this.state.selectedSchema, onChange: e => this.handleSchemaChange(e), required: true }, this.state.schemas.map(item => (React.createElement("option", { label: item.schemaName, value: item.schemaName })))),
+                                React.createElement(NativeSelect_1.default, { value: this.state.selectedSchema, onChange: e => this.handleSchemaChange(e), required: true }, this.state.schemas.map((item, index) => (React.createElement("option", { key: index, label: item.schemaName, value: item.schemaName })))),
                                 React.createElement(FormHelperText_1.default, null, "Select Data Source Schema")))),
                     React.createElement(core_1.Grid, { item: true, xs: 8 }),
                     React.createElement(core_1.Grid, { item: true, xs: "auto" }),
@@ -89402,7 +89394,6 @@ const core_1 = __webpack_require__(/*! @material-ui/core */ "./node_modules/@mat
 const React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const axios_1 = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 const react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-const urlPostJobs = "http://10.11.120.106:8080/axiata-security-gateway-1.0/job/all";
 const styles = (theme) => core_1.createStyles({
     root: {
         width: "90%",
@@ -89453,7 +89444,7 @@ class JobList extends React.Component {
             data: {}
         };
         axios_1.default
-            .post(urlPostJobs, sendData)
+            .post("http://10.11.120.106:8080/axiata-security-gateway-1.0/job/all", sendData)
             .then(response => {
             this.setState({ jobs: response.data.data });
             console.log("jobs");
@@ -89481,7 +89472,7 @@ class JobList extends React.Component {
                                     this.props.history.push("/job");
                                 } })))),
                 React.createElement(core_1.TableBody, null, this.state.jobs.map(row => {
-                    return (React.createElement(core_1.TableRow, { key: row.job_id },
+                    return (React.createElement(core_1.TableRow, { key: row.jobId },
                         React.createElement(CustomTableCell, null, row.description),
                         React.createElement(CustomTableCell, null, row.customer),
                         React.createElement(CustomTableCell, null, row.usecaseName),
@@ -89517,13 +89508,6 @@ const Send_1 = __webpack_require__(/*! @material-ui/icons/Send */ "./node_module
 const core_1 = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/index.es.js");
 const colors_1 = __webpack_require__(/*! @material-ui/core/colors */ "./node_modules/@material-ui/core/colors/index.js");
 const axios_1 = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-const urlPostdataSources = "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/all";
-const urlPostTables = "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/tables";
-const urlPostColumns = "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/columns";
-const urlPostSchemas = "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/schemas";
-const urlPostCreatePIISettings = "http://10.11.120.105:8080/pii-mapping-1.0/pii/settings/add";
-const urlPostFindllPIISettingsByKey = "http://localhost:8080/axiata-security-gateway-1.0/pii/settings/find/key";
-const urlPostFindllPIISettingsByType = "http://localhost:8080/axiata-security-gateway-1.0/pii/settings/find/type";
 const styles = (theme) => createStyles_1.default({
     root: {
         minHeight: "50vh",
@@ -89576,7 +89560,7 @@ class PIISetting extends React.Component {
                 };
                 console.log(sendData);
                 axios_1.default
-                    .post(urlPostSchemas, sendData)
+                    .post("http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/schemas", sendData)
                     .then(response => {
                     if (response != null) {
                         this.setState({
@@ -89614,7 +89598,7 @@ class PIISetting extends React.Component {
             };
             console.log(sendData);
             axios_1.default
-                .post(urlPostTables, sendData)
+                .post("http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/tables", sendData)
                 .then(response => {
                 if (response != null) {
                     console.log(response);
@@ -89652,7 +89636,7 @@ class PIISetting extends React.Component {
                 };
                 console.log(sendData);
                 axios_1.default
-                    .post(urlPostColumns, sendData)
+                    .post("http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/columns", sendData)
                     .then(response => {
                     this.setState({
                         columns: [{ columnName: "" }].concat(response.data.data)
@@ -89723,7 +89707,7 @@ class PIISetting extends React.Component {
             formSubmitEvent.preventDefault();
             console.log(sendData);
             axios_1.default
-                .post(urlPostCreatePIISettings, sendData)
+                .post("http://10.11.120.105:8080/pii-mapping-1.0/pii/settings/add", sendData)
                 .then(response => {
                 console.log(response);
                 if (response.data.event.eventStatus === "OK") {
@@ -89769,7 +89753,7 @@ class PIISetting extends React.Component {
             data: {}
         };
         axios_1.default
-            .post(urlPostdataSources, sendData)
+            .post("http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/all", sendData)
             .then(response => {
             console.log(response.data.data);
             this.setState({
@@ -89931,7 +89915,6 @@ const core_1 = __webpack_require__(/*! @material-ui/core */ "./node_modules/@mat
 const React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const axios_1 = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 const react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-const urlPostPIISettingList = "http://10.11.120.106:8080/axiata-security-gateway-1.0/pii/settings/all";
 const styles = (theme) => core_1.createStyles({
     root: {
         width: "90%",
@@ -89982,7 +89965,7 @@ class PIISettingList extends React.Component {
             data: {}
         };
         axios_1.default
-            .post(urlPostPIISettingList, sendData)
+            .post("http://10.11.120.106:8080/axiata-security-gateway-1.0/pii/settings/all", sendData)
             .then(response => {
             this.setState({ pIISettingList: response.data.data });
             console.log("pIISettingList");

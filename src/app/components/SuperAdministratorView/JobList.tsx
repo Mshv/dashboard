@@ -18,9 +18,6 @@ import axios from "axios";
 import { red } from "@material-ui/core/colors";
 import { withRouter, Route } from "react-router-dom";
 
-const urlPostJobs =
-  "http://10.11.120.106:8080/axiata-security-gateway-1.0/job/all";
-
 // create a styles object using a theme. The createStyles function is
 // needed to placate the TS compiler.
 const styles = (theme: Theme) =>
@@ -102,7 +99,7 @@ class JobList extends React.Component<any, any> {
     };
 
     axios
-      .post(urlPostJobs, sendData)
+      .post(process.env.POST_JOBS, sendData)
       .then(response => {
         this.setState({ jobs: response.data.data });
         console.log("jobs");
@@ -145,7 +142,7 @@ class JobList extends React.Component<any, any> {
           <TableBody>
             {this.state.jobs.map(row => {
               return (
-                <TableRow key={row.job_id}>
+                <TableRow key={row.jobId}>
                   <CustomTableCell>{row.description}</CustomTableCell>
                   <CustomTableCell>{row.customer}</CustomTableCell>
                   <CustomTableCell>{row.usecaseName}</CustomTableCell>
