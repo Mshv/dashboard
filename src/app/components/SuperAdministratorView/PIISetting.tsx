@@ -34,26 +34,7 @@ import ModalPanelScheduler from "./ModalPanelScheduler";
 import PropTypes from "prop-types";
 import axios from "axios";
 
-const urlPostdataSources =
-  "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/all";
 
-const urlPostTables =
-  "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/tables";
-
-const urlPostColumns =
-  "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/columns";
-
-const urlPostSchemas =
-  "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/schemas";
-
-const urlPostCreatePIISettings =
-  "http://10.11.120.105:8080/pii-mapping-1.0/pii/settings/add";
-
-const urlPostFindllPIISettingsByKey =
-  "http://localhost:8080/axiata-security-gateway-1.0/pii/settings/find/key";
-
-const urlPostFindllPIISettingsByType =
-  "http://localhost:8080/axiata-security-gateway-1.0/pii/settings/find/type";
 
 // const styles = createStyles({
 const styles = (theme: Theme) =>
@@ -148,7 +129,7 @@ class PIISetting extends React.Component<any, any> {
       data: {}
     };
     axios
-      .post(urlPostdataSources, sendData)
+      .post(process.env.POST_DATASOURCES, sendData)
       .then(response => {
         console.log(response.data.data);
         this.setState({
@@ -184,7 +165,7 @@ class PIISetting extends React.Component<any, any> {
       };
       console.log(sendData);
       axios
-        .post(urlPostSchemas, sendData)
+        .post(process.env.POST_SCHEMAS, sendData)
         .then(response => {
           if (response != null) {
             // console.log(response);
@@ -225,7 +206,7 @@ class PIISetting extends React.Component<any, any> {
     };
     console.log(sendData);
     axios
-      .post(urlPostTables, sendData)
+      .post(process.env.POST_TABLES, sendData)
       .then(response => {
         if (response != null) {
           console.log(response);
@@ -263,7 +244,7 @@ class PIISetting extends React.Component<any, any> {
       };
       console.log(sendData);
       axios
-        .post(urlPostColumns, sendData)
+        .post(process.env.POST_COLUMNS, sendData)
         .then(response => {
           this.setState({
             columns: [{ columnName: "" }].concat(response.data.data)
@@ -346,7 +327,7 @@ class PIISetting extends React.Component<any, any> {
     formSubmitEvent.preventDefault(); //this function is used to stop the page refresh
     console.log(sendData);
     axios
-      .post(urlPostCreatePIISettings, sendData)
+      .post(process.env.POST_PII_SETTINGS_CREATE, sendData)
       .then(response => {
         console.log(response);
         if (response.data.event.eventStatus === "OK") {
@@ -422,9 +403,9 @@ class PIISetting extends React.Component<any, any> {
                     onChange={e => this.handleSchemaChange(e)}
                     required
                   >
-                    {this.state.schemas.map(item => (
+                    {this.state.schemas.map((item,index) => (
                       <option
-                        // key={item.schemaName}
+                        key={index}
                         label={item.schemaName}
                         value={item.schemaName}
                       />

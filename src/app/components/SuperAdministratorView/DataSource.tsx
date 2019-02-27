@@ -40,25 +40,6 @@ import { FormErrors } from "./../FormErrors";
 
 import { Validation, fieldValidatorCore } from "react-validation-framework";
 
-
-// const urlPostDataSourceCategories =
-//   "http://localhost:8080/axiata-security-gateway-1.0/datasource/categories";
-//   const urlPostDataSourceTypes =
-//   "http://localhost:8080/axiata-security-gateway-1.0/datasource/types";
-//   const urlPostdataSourceCreate =
-//   "http://localhost:8080/axiata-security-gateway-1.0/datasource/create";
-  const urlPostdataSourceByID =
-  "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/id";
-const urlPostDataSourceCategories =
-  "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/categories";
-const urlPostDataSourceTypes =
-  "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/types";
-  const urlPostdataSourceCreate =
-  "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/create";
-
-const urlGetTablesInfo = "http://localhost:8080/getTablesInfo";
-const urlGetColumnsInfo = "http://localhost:8080/getColumnsInfo";
-
 const styles = createStyles({
   root: {
     minHeight: "50vh",
@@ -171,7 +152,7 @@ class DataSource extends React.Component<any, any> {
     };
 
     axios
-      .post(urlPostDataSourceCategories, sendData)
+      .post(process.env.POST_DATASOURCE_CATEGORIES, sendData)
       .then(response => {
         // console.log(response.data.data);
 
@@ -243,7 +224,7 @@ class DataSource extends React.Component<any, any> {
       //   console.log("SendData");
       //   console.log(sendData);
       axios
-        .post(urlPostDataSourceTypes, sendData)
+        .post(process.env.POST_DATASOURCE_TYPES, sendData)
         .then(response => {
           console.log("urlPostDataSourceTypes");
           //   console.log(response);
@@ -299,7 +280,7 @@ class DataSource extends React.Component<any, any> {
     formSubmitEvent.preventDefault(); //this function is used to stop the page refresh
     console.log(sendData);
     axios
-      .post(urlPostdataSourceCreate, sendData)
+      .post(process.env.POST_DATASOURCE_CREATE, sendData)
       .then(response => {
         console.log(response);
         if (response.data.event.eventStatus === "OK") {

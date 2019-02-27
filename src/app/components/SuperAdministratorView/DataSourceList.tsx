@@ -23,10 +23,6 @@ const createData = (name, calories, fat, carbs, protein) => {
   return { id, name, calories, fat, carbs, protein };
 };
 
-
-const urlPostdataSourceAll =
-  "http://10.11.120.106:8080/axiata-security-gateway-1.0/datasource/all";
-
 // create a styles object using a theme. The createStyles function is
 // needed to placate the TS compiler.
 const styles = (theme: Theme) =>
@@ -108,7 +104,7 @@ class DataSourceList extends React.Component<any, any> {
     };
 
     axios
-      .post(urlPostdataSourceAll, sendData)
+      .post(process.env.POST_DATASOURCES, sendData)
       .then(response => {
         this.setState({ dataSources: response.data.data });
         console.log("dataSources");
