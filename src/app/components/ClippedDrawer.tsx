@@ -233,6 +233,7 @@ class ClippedDrawer extends React.Component<any, any> {
     
             <PrivateRoute path="/dataSourceList" component={DataSourceList} />
             <PrivateRoute path="/dataSource" component={DataSource} />
+            <PrivateRoute path="/dataSource/:dsId" component={DataSource}/>
             
             <PrivateRoute
               path="/configurationList"
