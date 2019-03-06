@@ -11,11 +11,18 @@ import {
   WithStyles,
   Icon,
   SvgIcon,
-  Switch
+  Switch,
+  Checkbox,
+  IconButton
 } from "@material-ui/core";
 import * as React from "react";
 import axios from "axios";
-import { withRouter,Route } from "react-router-dom";
+import { withRouter, Route } from "react-router-dom";
+import DeleteIcon from "@material-ui/icons/Delete";
+import * as Collections from "typescript-collections";
+import Link from '@material-ui/core/Link';
+import DataSource from "./DataSource";
+
 
 let id = 0;
 const createData = (name, calories, fat, carbs, protein) => {
@@ -37,7 +44,7 @@ const styles = (theme: Theme) =>
     },
     icon: {
       margin: theme.spacing.unit * 2
-    },
+    }
     // specific: {
     //   width: "1%"
     // }
@@ -80,7 +87,9 @@ class DataSourceList extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
-      dataSources: []
+      dataSources: [],
+      selected: [],
+      selectedCheckboxes: new Collections.Set()
     };
   }
 
@@ -115,18 +124,81 @@ class DataSourceList extends React.Component<any, any> {
       });
   }
 
+  isSelected = index => {
+    return this.state.selected.indexOf(index) !== -1;
+  };
+  handleRowSelection = selectedRows => {
+    this.setState({
+      selected: selectedRows
+    });
+  };
+  toggleCheckbox = (event: any) => {
+    const label = event.target.value;
+    if (this.state.selectedCheckboxes.contains(label)) {
+      let local_selectedCheckboxes: any = this.state.selectedCheckboxes;
+      local_selectedCheckboxes.remove(label);
+      this.setState({ selectedCheckboxes: local_selectedCheckboxes });
+    } else {
+      let local_selectedCheckboxes: any = this.state.selectedCheckboxes;
+      local_selectedCheckboxes.add(label);
+      this.setState({ selectedCheckboxes: local_selectedCheckboxes });
+      console.log(this.state.selectedCheckboxes);
+    }
+    console.log(
+      "this.state.selectedCheckboxes is : " + this.state.selectedCheckboxes
+    );
+  };
+  handleClick = (event, id) => {
+    const { selected } = this.state;
+    const selectedIndex = selected.indexOf(id);
+    let newSelected = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, id);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
+      );
+    }
+
+    this.setState({ selected: newSelected });
+  };
+
+  handleSelectAllClick = event => {
+    if (event.target.checked) {
+      this.setState(state => ({
+        selected: state.data.dataSources(row => row.dsId)
+      }));
+      return;
+    }
+    this.setState({ selected: [] });
+  };
+
   render() {
-    const { classes } = this.props;
+    const { classes, order, orderBy, numSelected, rowCount } = this.props;
     return (
       <Paper className={classes.root}>
         {/* <p>List Of DataSoures: {this.props.hi}</p> */}
         <Table className={classes.table} padding="dense">
           <TableHead>
             <TableRow style={{ height: "auto !important" }}>
+              <CustomTableCell padding="checkbox">
+                <Checkbox
+                  indeterminate={numSelected > 0 && numSelected < rowCount}
+                  checked={numSelected === rowCount}
+                  // onChange={handleSelectAllClick}
+                />
+              </CustomTableCell>
+              <CustomTableCell>ID</CustomTableCell>
               <CustomTableCell>DS Identifier</CustomTableCell>
               <CustomTableCell>DS Name</CustomTableCell>
               <CustomTableCell>Driver</CustomTableCell>
-              <CustomTableCell style={{ width: "17%" }}>
+              <CustomTableCell>
                 <HomeIcon
                   className={classes.icon}
                   color="secondary"
@@ -141,17 +213,44 @@ class DataSourceList extends React.Component<any, any> {
                     this.props.history.push("/datasource");
                   }}
                 />
+                <DeleteIcon color="secondary" className={classes.icon} />
               </CustomTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {this.state.dataSources.map(row => {
+            {this.state.dataSources.map((row, index) => {
+              const isSelected = this.isSelected(row.dsId);
               return (
-                <TableRow key={row.dsId}>
-                  <CustomTableCell>{row.dsIdentifier}</CustomTableCell>
+                <TableRow
+                  key={row.dsId}
+                  selected={isSelected}
+                  aria-checked={isSelected}
+                  onClick={event => this.handleClick(event, row.dsId)}
+                >
+                  <CustomTableCell padding="checkbox">
+                    <Checkbox
+                      checked={isSelected}
+                      value={row.dsId.toString()}
+                      onChange={e => this.toggleCheckbox(e)}
+                    />
+                  </CustomTableCell>
+                  <CustomTableCell>{index + 1}</CustomTableCell>
+                  <CustomTableCell>
+                    <Link
+                      component="button"
+                      variant="body2"
+                      onClick={() => { 
+                        this.props.history.push({
+                          pathname: '/datasource',
+                          state: {dsId: row.dsId},
+                        })
+                      }}
+                    >
+                      {row.dsIdentifier}
+                    </Link>
+                  </CustomTableCell>
                   <CustomTableCell>{row.dsName}</CustomTableCell>
-                  <CustomTableCell>{row.driver}</CustomTableCell>
-                  <CustomTableCell style={{ width: "17%" }} ></CustomTableCell>
+                  <CustomTableCell>{row.driver}</CustomTableCell>`{" "}
                 </TableRow>
               );
             })}

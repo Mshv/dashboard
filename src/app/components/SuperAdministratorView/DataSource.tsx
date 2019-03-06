@@ -49,7 +49,7 @@ const styles = createStyles({
   },
   formControl: {
     minWidth: 150,
-   marginLeft: 20
+    marginLeft: 20
     //  minHeight: 50
   },
   "@media (min-width: 960px)": {
@@ -126,7 +126,10 @@ class DataSource extends React.Component<any, any> {
 
       textmask: "    .    .    .    ",
       justify: "center",
-      alignItems: "center"
+      alignItems: "center",
+      datasources: [],
+      isEdit: false,
+      dsId: ""
     };
   }
 
@@ -142,8 +145,52 @@ class DataSource extends React.Component<any, any> {
   componentWillMount() {}
 
   componentDidMount() {
+    console.log(this.props);
+    // console.log(this.props.history.location.state != null? "undefined": "defined");
+    // console.log(this.props.history.location.state.dsId == null? "undefined dsId": "defined dsId");
     this.getDataSourceCategories();
+
+    if (this.props.history.location.state != null) {
+      this.props.history.location.state.dsId == null
+        ? ""
+        : this.loadDataSourceInfo(this.props.history.location.state.dsId);
+    }
   }
+  loadDataSourceInfo(dsId: any): any {
+    this.setState({ dsId: dsId });
+    this.setState({ isEdit: true });
+    const sendData = {
+      event: {},
+      data: {
+        dsId: this.props.history.location.state.dsId
+      }
+    };
+
+    axios
+      .post(process.env.POST_DATASOURCE_BY_ID, sendData)
+      .then(response => {
+        console.log(response);
+        console.log(response.data.data);
+        this.setState({ selectedDataSourceType: response.data.data.dsTypeId });
+        this.setState({ identifier: response.data.data.dsIdentifier });
+        this.setState({ dataSourceName: response.data.data.dsName });
+        this.setState({ port: response.data.data.dsPort });
+        this.setState({ ip: response.data.data.dsIp });
+        this.setState({ driver: response.data.data.driver });
+        this.setState({ protocol: response.data.data.protocol });
+        this.setState({ version: response.data.data.version });
+        this.setState({ user: response.data.data.dsUser });
+        this.setState({ password: response.data.data.password });
+        // datasources.forEach( (res) =>  {
+        //   this.setState({ driver: res.driver }),
+        //   this.setState({ protocol: res.protocol })
+        //  } );
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  }
+
 
   getDataSourceCategories(): any {
     const sendData = {
@@ -207,12 +254,16 @@ class DataSource extends React.Component<any, any> {
   };
 
   handleChange = name => event => {
-    // this.setState({ [name]: event.target.value });
-    this.setState({ [name]: event.target.value }, () => {
-      // this.validateField(name, event.target.value);
+    let value = event.target.value;
+    console.log("event.target.value: " + value);
+    this.setState({ [name]: value }, () => {
+      this.handler(name, value);
     });
+  };
+
+  handler(name, value: any): any {
     if (name == "selectedDataSourceCategory") {
-      this.state = { selectedDataSourceCategory: event.target.value };
+      this.state = { selectedDataSourceCategory: value };
       this.setState({ selectedDataSourceType: "" });
 
       const sendData = {
@@ -239,8 +290,7 @@ class DataSource extends React.Component<any, any> {
           console.log(error);
         });
     }
-  };
-
+  }
   handleFormSubmit = formSubmitEvent => {
     /*     this.validateField("identifier", this.state.identifier);
     if (this.state.identifier === "") {
@@ -248,11 +298,9 @@ class DataSource extends React.Component<any, any> {
     } */
     if (
       this.state.driver === "" ||
-      this.state.selectedDataSourceCategory === "" ||
       this.state.ip === "" ||
       this.state.dataSourceName === "" ||
       this.state.port === "" ||
-      this.state.dsTypeId === "" ||
       this.state.user === "" ||
       this.state.password === "" ||
       this.state.protocol === "" ||
@@ -261,9 +309,19 @@ class DataSource extends React.Component<any, any> {
       return;
     }
 
+    if (this.state.isEdit == false) {
+      if (
+        this.state.selectedDataSourceCategory === "" ||
+        this.state.dsTypeId === ""
+      ) {
+        return;
+      }
+    }
+
     const sendData = {
       event: {},
       data: {
+        ...(this.state.isEdit == true ? { dsId: this.state.dsId } : {}),
         dsTypeId: this.state.selectedDataSourceType,
         dsIdentifier: this.state.identifier,
         dsName: this.state.dataSourceName,
@@ -315,6 +373,7 @@ class DataSource extends React.Component<any, any> {
     this.setState({ dataSourceNameValid: false });
     this.setState({ formValid: false });
     this.setState({ formErrors: { identifier: "", dataSourceName: "" } });
+    this.setState({ isEdit: false });
     this.getDataSourceCategories();
   }
   handleFormReset = formSubmitEvent => {
@@ -324,6 +383,8 @@ class DataSource extends React.Component<any, any> {
   render() {
     const { classes } = this.props;
     const { open } = this.state;
+    console.log("this.state.isEdit: " + this.state.isEdit);
+    const button = this.state.isEdit === true ? "Edit" : "Create";
 
     return (
       // <Paper className={classes.rootPaper}>
@@ -333,53 +394,57 @@ class DataSource extends React.Component<any, any> {
         </div>
         <div className={classes.root}>
           <Grid container spacing={24}>
-            <Grid item xs="auto">
-              <div>
-                <FormControl className={classes.formControl}>
-                  <InputLabel htmlFor="age-native-helper">
-                    Data Source Category
-                  </InputLabel>
-                  <NativeSelect
-                    style={{ width: 225 }}
-                    value={this.state.selectedDataSourceCategory}
-                    onChange={this.handleChange("selectedDataSourceCategory")}
-                    required
-                  >
-                    {this.state.dataSourceCategories.map(item => (
-                      <option
-                        key={item.categoryId}
-                        label={item.dsCategory}
-                        value={item.categoryId}
-                      />
-                    ))}
-                  </NativeSelect>
-                  <FormHelperText>Select Data Source category</FormHelperText>
-                </FormControl>
-              </div>
-            </Grid>
-            <Grid item xs="auto">
-              <div>
-                <FormControl className={classes.formControl}>
-                  <InputLabel htmlFor="age-native-helper">
-                    Data Source Type
-                  </InputLabel>
-                  <NativeSelect
-                    value={this.state.selectedDataSourceType}
-                    onChange={this.handleChange("selectedDataSourceType")}
-                    required
-                  >
-                    {this.state.dataSourceTypes.map(item => (
-                      <option
-                        key={item.dsTypeId}
-                        label={item.dsType}
-                        value={item.dsTypeId}
-                      />
-                    ))}
-                  </NativeSelect>
-                  <FormHelperText>Select Data Source Type</FormHelperText>
-                </FormControl>
-              </div>
-            </Grid>
+            {this.state.isEdit ? null : (
+              <Grid item xs="auto">
+                <div>
+                  <FormControl className={classes.formControl}>
+                    <InputLabel htmlFor="age-native-helper">
+                      Data Source Category
+                    </InputLabel>
+                    <NativeSelect
+                      style={{ width: 225 }}
+                      value={this.state.selectedDataSourceCategory}
+                      onChange={this.handleChange("selectedDataSourceCategory")}
+                      required
+                    >
+                      {this.state.dataSourceCategories.map(item => (
+                        <option
+                          key={item.categoryId}
+                          label={item.dsCategory}
+                          value={item.categoryId}
+                        />
+                      ))}
+                    </NativeSelect>
+                    <FormHelperText>Select Data Source category</FormHelperText>
+                  </FormControl>
+                </div>
+              </Grid>
+            )}
+            {this.state.isEdit ? null : (
+              <Grid item xs="auto">
+                <div>
+                  <FormControl className={classes.formControl}>
+                    <InputLabel htmlFor="age-native-helper">
+                      Data Source Type
+                    </InputLabel>
+                    <NativeSelect
+                      value={this.state.selectedDataSourceType}
+                      onChange={this.handleChange("selectedDataSourceType")}
+                      required
+                    >
+                      {this.state.dataSourceTypes.map(item => (
+                        <option
+                          key={item.dsTypeId}
+                          label={item.dsType}
+                          value={item.dsTypeId}
+                        />
+                      ))}
+                    </NativeSelect>
+                    <FormHelperText>Select Data Source Type</FormHelperText>
+                  </FormControl>
+                </div>
+              </Grid>
+            )}
             <Grid item xs={8} />
             <Grid item xs="auto" />
             <Grid item xs="auto" />
@@ -589,7 +654,7 @@ class DataSource extends React.Component<any, any> {
                 onClick={this.handleFormSubmit}
               >
                 <SendIcon />
-                Create
+                {button}
               </Button>
             </Grid>
             <Grid item xs>
