@@ -12,7 +12,6 @@ import { default as Paper } from "@material-ui/core/Paper";
 import { default as Typography } from "@material-ui/core/Typography";
 import { Theme, createStyles, withStyles } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
-import DialogLogIn from "./DialogLogIn";
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
