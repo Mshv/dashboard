@@ -8,10 +8,7 @@ const path = require('path'),
 
 module.exports = {
     mode: 'development',
-    entry: {
-        app: ['./src/app/App.tsx', 'webpack-hot-middleware/client'],
-        vendor: ['react', 'react-dom']
-    },
+    entry: ["babel-polyfill","./src/app/App.tsx"],
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'js/[name].bundle.js'

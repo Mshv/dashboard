@@ -3,7 +3,7 @@ const path = require('path'),
    webpack = require('webpack'),
    webpackConfig = require('./webpack.config.js'),
    app = express(),
-   port = process.env.PORT || 3001;
+   port = process.env.PORT || 2000;
 app.listen(port, () => { console.log(`App is listening on port ${port}`) });
 app.get('/', (req, res) => {
    res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));

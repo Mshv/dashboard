@@ -12,6 +12,12 @@ import { default as Paper } from "@material-ui/core/Paper";
 import { default as Typography } from "@material-ui/core/Typography";
 import { Theme, createStyles, withStyles } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
+import DialogLogIn from "./DialogLogIn";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -53,11 +59,17 @@ class SignIn extends React.Component<any, any> {
     this.state = {
       userName: "",
       password: "",
-      isAuthenticated: false
+      isAuthenticated: false,
+      open: false,
     };
     this.userNameKepUp = this.userNameKepUp.bind(this);
     this.passwordKepUp = this.passwordKepUp.bind(this);
   }
+
+  handleClose = () => {
+    this.setState({ open: false });
+    // this.props.history.push("/");
+  };
 
   componentWillMount() {
     // will trigger the callback function whenever a new Route renders a component
@@ -68,8 +80,7 @@ class SignIn extends React.Component<any, any> {
     });
   }
 
-  handleFormSubmit = formSubmitEvent => {
-    //formSubmitEvent.preventDefault();  // prevent form submission
+    handleFormSubmit = formSubmitEvent => {
     console.log(
       " Sign in button is clicked ....",
       " UserName ....",
@@ -78,14 +89,9 @@ class SignIn extends React.Component<any, any> {
       this.state.password
     );
     console.log(process.env.REACT_APP_DEV_API_URL);
-    // if (!this.state.userName.value.trim() || !this.state.userName.password.trim()) {
-    //   console.log("Checking");
-
-    //   return;
-    // }
 
     if (this.state.userName !== "" && this.state.password !== "") {
-      if (this.state.userName === "admin") {
+      if (this.state.userName === "admin" && this.state.password === "admin") {
         this.state = { isAuthenticated: true };
         localStorage.setItem(
           "isAuthenticated",
@@ -93,7 +99,8 @@ class SignIn extends React.Component<any, any> {
         );
         this.props.history.push("/dashboard");
       } else {
-        this.props.history.push("/");
+        formSubmitEvent.preventDefault(); //this function is used to stop the page refresh
+        this.setState({ open: true });
       }
     }
   };
@@ -121,6 +128,7 @@ class SignIn extends React.Component<any, any> {
             Sign in
           </Typography>
           <form className={classes.form}>
+          <div>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="userName">User Name</InputLabel>
               <Input
@@ -157,6 +165,27 @@ class SignIn extends React.Component<any, any> {
             >
               Sign in
             </Button>
+            </div>
+            <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Login Alert"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Wrong User Name or Password, Try again ...
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              Okay
+            </Button>
+          </DialogActions>
+        </Dialog>
           </form>
         </Paper>
       </main>
