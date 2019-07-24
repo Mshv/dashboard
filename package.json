@@ -21,6 +21,7 @@
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "bootstrap-sass": "^3.4.0",
+    "cors": "^2.8.5",
     "dotenv-webpack": "^1.7.0",
     "express": "^4.16.4",
     "history": "^4.7.2",
