@@ -492,6 +492,7 @@ class DataSource extends React.Component<any, any> {
                 <MuiThemeProvider theme={theme}>
                   <TextField
                     className={classes.textField}
+                    required
                     label="Protocol"
                     variant="outlined"
                     id="mui-theme-provider-outlined-input-protocol"
@@ -535,7 +536,7 @@ class DataSource extends React.Component<any, any> {
                   <MuiThemeProvider theme={theme}>
                     <TextField
                       className={classes.margin}
-                      label="IP"
+                      label="IP/Host Name"
                       // type="number"
                       variant="outlined"
                       id="mui-theme-provider-outlined-input-dataSourceIP"
