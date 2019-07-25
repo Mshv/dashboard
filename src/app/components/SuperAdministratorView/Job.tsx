@@ -519,7 +519,7 @@ class ManageDataAnonymizationJob extends React.Component<any, any> {
                   >
                     <option value="" />
                     <option value={"CSV_FILE"}>CSV</option>
-                    <option value={"JSON_FILE"}>JSON</option>
+                    <option value={"TSV_FILE"}>TSV</option>
                   </NativeSelect>
                   <FormHelperText>Select Output Format</FormHelperText>
                 </FormControl>
