@@ -501,6 +501,7 @@ class ManageDataAnonymizationJob extends React.Component<any, any> {
                       id="mui-theme-provider-outlined-input-maxRecordSize"
                       value={this.state.maxRecordSize}
                       onChange={e => this.handleMaxRecordSizeChange(e)}
+                      required
                     />
                   </MuiThemeProvider>
                 </FormControl>
