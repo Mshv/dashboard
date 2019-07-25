@@ -546,7 +546,7 @@ class PIISetting extends React.Component<any, any> {
                     <option value={"SHA1"}>SHA1</option>
                     <option value={"SHA256"}>SHA256</option>
                     <option value={"SHA384"}>SHA384</option>
-                    <option value={"SHA528"}>SHA528</option>
+                    <option value={"SHA512"}>SHA512</option>
                   </NativeSelect>
                   <FormHelperText>Select Security Key Type</FormHelperText>
                 </FormControl>
