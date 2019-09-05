@@ -1,5 +1,4 @@
 import * as React from "react";
-
 class SystemLogs extends React.Component {
   render() {
     return (
@@ -7,7 +6,7 @@ class SystemLogs extends React.Component {
         <img
           height="30%"
           width="30%"
-          src={require("./../../../images/underConstruction.png")}
+          src={require("../../../assets/img/underConstruction.png")}
         />
       </div>
     );

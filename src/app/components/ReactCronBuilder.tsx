@@ -1,6 +1,6 @@
 import * as React from "react";
 import CronBuilder from "react-cron-builder";
-import "react-cron-builder/dist/bundle.css";
+// import "react-cron-builder/dist/bundle.css";
 
 class ReactCronBuilder extends React.Component {
   state = {};

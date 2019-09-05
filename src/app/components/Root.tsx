@@ -1,60 +1,39 @@
 import * as React from "react";
+import { Component } from 'react';
 import { BrowserRouter } from "react-router-dom";
-import SignIn from "./SignIn";
-import Dashboard from "./Dashboard";
+import SignIn from "./auth/SignIn";
+import PrivateRoute from "./auth/PrivateRoute";
+import Dashboard from "./layout/Dashboard";
 import { Route, Switch, Redirect } from "react-router-dom";
-import { createStore, applyMiddleware } from "redux";
-import Home from "./Home";
+import { connect } from 'react-redux';
+import Auth from "./auth/AuthService";
 
-function PrivateRoute({ component: Component, ...rest }) {
-  console.log(
-    " <<<<<<>>>>>localStorage.getItem isAuthenticated --- ",
-    localStorage.getItem("isAuthenticated")
-  );
-  return (
-    <Route
-      {...rest}
-      render={
-        props =>
-          localStorage.getItem("isAuthenticated") === "1" ? (
-            <Component {...props} />
-          ) : (
-            // console.log("**PrivateRoute** is Authenticated - localStorage : ", localStorage.getItem("isAuthenticated")) :
-            console.log(
-              "**PrivateRoute** is not Authenticated - localStorage: ",
-              localStorage.getItem("isAuthenticated")
-            )
-          )
-        // (
-        //     <Redirect
-        //         to={{
-        //             pathname: "/",
-        //             // state: { from: props.location }
-        //         }}
-        //     />
-        // )
-      }
-    />
-  );
-}
-// const store = createStore(() => [],{}, applyMiddleware());
-// const store = createStore((state = {}, action) => state);
-
-class Root extends React.Component {
+class Root extends React.Component<any,any> {
+// class Root extends Component {
+  constructor(props) {
+    super(props);  
+  }
   render() {
+    console.log(" this.props: " , this.props);
     return (
      
         <BrowserRouter>
           <Switch>
-            {/* <PrivateRoute exact path="/dashboard" component={AppNavBar} /> */}
-            {/* <PrivateRoute exact path="/dashboard" component={AppNavBar} /> */}
-            <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            {/* <PrivateRoute exact path="/dashboard" component={Dashboard} isAuthenticated={Auth.getToken2}/> */}
+            <PrivateRoute exact path="/dashboard" component={Dashboard} sendProps={this.props} />
             <Route exact path="/" component={SignIn} />
             <Redirect from="*" to="/" />
           </Switch>
         </BrowserRouter>
-    
     );
   }
 }
-export default Root;
+
+const mapStateToProps = state => ({
+  userName: state.login.userName,
+  password: state.login.password,
+  token:state.login.token,
+})
+// const mapStateToProps = state => ({ isAuthenticated:state.login.isAuthenticated });
+export default connect(mapStateToProps)(Root);
+// export default Root;

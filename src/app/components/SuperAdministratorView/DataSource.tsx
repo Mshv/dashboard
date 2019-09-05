@@ -7,50 +7,36 @@ import {
 import createStyles from "@material-ui/core/styles/createStyles";
 import { default as InputLabel } from "@material-ui/core/InputLabel";
 import { default as FormControl } from "@material-ui/core/FormControl";
-import * as Collections from "typescript-collections";
-
-import { default as Input } from "@material-ui/core/Input";
 import { default as NativeSelect } from "@material-ui/core/NativeSelect";
 import { default as FormHelperText } from "@material-ui/core/FormHelperText";
 import { default as Button } from "@material-ui/core/Button";
 import { default as SendIcon } from "@material-ui/icons/Send";
 import axios from "axios";
+import { connect } from 'react-redux';
 import {
   TextField,
   InputAdornment,
   IconButton,
   Grid,
-  Paper,
-  FormControlLabel,
-  Avatar,
-  Typography,
-  Modal,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
   DialogContentText
 } from "@material-ui/core";
-import { green, grey } from "@material-ui/core/colors";
-import MaskedInput from "react-text-mask";
-
+import { green } from "@material-ui/core/colors";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { FormErrors } from "./../FormErrors";
 
-import { Validation, fieldValidatorCore } from "react-validation-framework";
-
 const styles = createStyles({
   root: {
     minHeight: "50vh",
-    // display: 'flex',
-    // flexWrap: 'wrap',
     flexGrow: 1
   },
   formControl: {
     minWidth: 150,
     marginLeft: 20
-    //  minHeight: 50
   },
   "@media (min-width: 960px)": {
     root: {
@@ -65,7 +51,6 @@ const styles = createStyles({
   rootPaper: {
     width: "60%",
     marginTop: "2%"
-    //  overflowX: 'auto',
   }
 });
 
@@ -129,7 +114,14 @@ class DataSource extends React.Component<any, any> {
       alignItems: "center",
       datasources: [],
       isEdit: false,
-      dsId: ""
+      dsId: "",
+      hasErrorDataSourceCategory: false,
+      hasErrorDataSourceType: false,
+      hasErrorDataSourceName: false,
+      hasErrorDriver:false,
+      hasErrorProtocol:false,
+      hasErrorIdentifier:false,
+      hasErrorIP:false
     };
   }
 
@@ -146,8 +138,6 @@ class DataSource extends React.Component<any, any> {
 
   componentDidMount() {
     console.log(this.props);
-    // console.log(this.props.history.location.state != null? "undefined": "defined");
-    // console.log(this.props.history.location.state.dsId == null? "undefined dsId": "defined dsId");
     this.getDataSourceCategories();
 
     if (this.props.history.location.state != null) {
@@ -165,7 +155,7 @@ class DataSource extends React.Component<any, any> {
         dsId: this.props.history.location.state.dsId
       }
     };
-
+console.log(" process.env.NODE_ENV : ", process.env.NODE_ENV);
     axios
       .post(process.env.POST_DATASOURCE_BY_ID, sendData)
       .then(response => {
@@ -197,6 +187,7 @@ class DataSource extends React.Component<any, any> {
       event: {},
       data: {}
     };
+    console.log(" process.env.NODE_ENV : ", process.env.NODE_ENV);
 
     axios
       .post(process.env.POST_DATASOURCE_CATEGORIES, sendData)
@@ -256,9 +247,21 @@ class DataSource extends React.Component<any, any> {
   handleChange = name => event => {
     let value = event.target.value;
     console.log("event.target.value: " + value);
+    console.log("event.target.name: " + name);
     this.setState({ [name]: value }, () => {
       this.handler(name, value);
     });
+    switch(name) {
+      case 'dataSourceName':
+        this.setState({ hasErrorDataSourceName: false });
+        return;
+      case 'warning':
+        return;
+      case 'error':
+        return;
+      default:
+        return null;
+    }
   };
 
   handler(name, value: any): any {
@@ -296,6 +299,27 @@ class DataSource extends React.Component<any, any> {
     if (this.state.identifier === "") {
       return;
     } */
+    if (!this.state.selectedDataSourceCategory) {
+      this.setState({ hasErrorDataSourceCategory: true });
+    }
+    if (!this.state.selectedDataSourceType) {
+      this.setState({ hasErrorDataSourceType: true });
+    }
+    if (!this.state.dataSourceName) {
+      this.setState({ hasErrorDataSourceName: true });
+    }
+    if (!this.state.driver) {
+      this.setState({ hasErrorDriver: true });
+    }
+    if (!this.state.protocol) {
+      this.setState({ hasErrorProtocol: true });
+    }
+    if (!this.state.identifier) {
+      this.setState({ hasErrorIdentifier: true });
+    }
+    if (!this.state.ip) {
+      this.setState({ hasErrorIP: true });
+    }
     if (
       this.state.driver === "" ||
       this.state.ip === "" ||
@@ -384,6 +408,7 @@ class DataSource extends React.Component<any, any> {
     const { classes } = this.props;
     const { open } = this.state;
     console.log("this.state.isEdit: " + this.state.isEdit);
+    console.log("this.props.userName: " + this.props.userName);
     const button = this.state.isEdit === true ? "Edit" : "Create";
 
     return (
@@ -397,7 +422,7 @@ class DataSource extends React.Component<any, any> {
             {this.state.isEdit ? null : (
               <Grid item xs="auto">
                 <div>
-                  <FormControl className={classes.formControl}>
+                  <FormControl className={classes.formControl} error={this.state.hasErrorDataSourceCategory}>
                     <InputLabel htmlFor="age-native-helper">
                       Data Source Category
                     </InputLabel>
@@ -415,6 +440,7 @@ class DataSource extends React.Component<any, any> {
                         />
                       ))}
                     </NativeSelect>
+                    {this.state.hasErrorDataSourceCategory && <FormHelperText>This is required!</FormHelperText>}
                     <FormHelperText>Select Data Source category</FormHelperText>
                   </FormControl>
                 </div>
@@ -423,7 +449,7 @@ class DataSource extends React.Component<any, any> {
             {this.state.isEdit ? null : (
               <Grid item xs="auto">
                 <div>
-                  <FormControl className={classes.formControl}>
+                  <FormControl className={classes.formControl} error={this.state.hasErrorDataSourceType}>
                     <InputLabel htmlFor="age-native-helper">
                       Data Source Type
                     </InputLabel>
@@ -440,6 +466,7 @@ class DataSource extends React.Component<any, any> {
                         />
                       ))}
                     </NativeSelect>
+                    {this.state.hasErrorDataSourceType && <FormHelperText>DS Type is required!</FormHelperText>}
                     <FormHelperText>Select Data Source Type</FormHelperText>
                   </FormControl>
                 </div>
@@ -451,7 +478,7 @@ class DataSource extends React.Component<any, any> {
             <Grid item xs={12} />
             <Grid item xs="auto">
               <div>
-                <FormControl className={classes.formControl}>
+                <FormControl className={classes.formControl} error={this.state.hasErrorDataSourceName} >
                   <MuiThemeProvider theme={theme}>
                     <TextField
                       className={classes.textField}
@@ -462,13 +489,14 @@ class DataSource extends React.Component<any, any> {
                       onChange={this.handleChange("dataSourceName")}
                       required
                     />
+                    {this.state.hasErrorDataSourceName && <FormHelperText>DS Name is required!</FormHelperText>}
                   </MuiThemeProvider>
                 </FormControl>
               </div>
             </Grid>
             <Grid item xs="auto">
               <div>
-                <FormControl className={classes.formControl} required fullWidth>
+                <FormControl className={classes.formControl} fullWidth error={this.state.hasErrorDriver}>
                   <MuiThemeProvider theme={theme}>
                     <TextField
                       className={classes.margin}
@@ -479,6 +507,7 @@ class DataSource extends React.Component<any, any> {
                       onChange={this.handleChange("driver")}
                       required
                     />
+                   {this.state.hasErrorDriver && <FormHelperText>Driver is required!</FormHelperText>}
                   </MuiThemeProvider>
                 </FormControl>
               </div>
@@ -488,7 +517,7 @@ class DataSource extends React.Component<any, any> {
             <Grid item xs="auto" />
             <Grid item xs={12} />
             <Grid item xs="auto">
-              <FormControl className={classes.formControl}>
+              <FormControl className={classes.formControl} error={this.state.hasErrorProtocol}>
                 <MuiThemeProvider theme={theme}>
                   <TextField
                     className={classes.textField}
@@ -499,6 +528,7 @@ class DataSource extends React.Component<any, any> {
                     value={this.state.protocol}
                     onChange={this.handleChange("protocol")}
                   />
+                  {this.state.hasErrorProtocol && <FormHelperText>Protocol is required!</FormHelperText>}
                 </MuiThemeProvider>
               </FormControl>
             </Grid>
@@ -506,7 +536,7 @@ class DataSource extends React.Component<any, any> {
                         <InputLabel htmlFor="age-native-helper">:</InputLabel>
                     </Grid> */}
             <Grid item xs="auto">
-              <FormControl className={classes.formControl}>
+              <FormControl className={classes.formControl} error={this.state.hasErrorIdentifier}>
                 <MuiThemeProvider theme={theme}>
                   <TextField
                     className={classes.textField}
@@ -523,6 +553,7 @@ class DataSource extends React.Component<any, any> {
                     //     : " "
                     // }
                   />
+                {this.state.hasErrorIdentifier && <FormHelperText>Identifier is required!</FormHelperText>}
                 </MuiThemeProvider>
               </FormControl>
             </Grid>
@@ -532,7 +563,7 @@ class DataSource extends React.Component<any, any> {
             <Grid item xs={12} />
             <Grid item xs="auto">
               <div>
-                <FormControl className={classes.formControl}>
+                <FormControl className={classes.formControl} error={this.state.hasErrorIP}>
                   <MuiThemeProvider theme={theme}>
                     <TextField
                       className={classes.margin}
@@ -544,6 +575,7 @@ class DataSource extends React.Component<any, any> {
                       onChange={this.handleChange("ip")}
                       required
                     />
+                   {this.state.hasErrorIP && <FormHelperText>IP is required!</FormHelperText>}
                   </MuiThemeProvider>
                 </FormControl>
               </div>
@@ -697,4 +729,20 @@ class DataSource extends React.Component<any, any> {
     );
   }
 }
-export default withStyles(styles)(DataSource);
+
+//read from state 
+const mapStateToProps = state => ({
+  userName: state.login.userName,
+});
+
+// push to state
+const mapDispatchToProps = dispatch => ({
+  // fetch_userName: userName => dispatch({ type: 'authenticated', userName }),
+  // fetch_password: password => dispatch({ type: 'authenticated', password }),
+});
+
+// export default withStyles(styles)(SignIn);
+// export default withRouter(withStyles(styles)(SignIn));
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(DataSource));
+
+// export default withStyles(styles)(DataSource);

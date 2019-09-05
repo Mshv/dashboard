@@ -3,10 +3,11 @@ const path = require('path'),
    webpack = require('webpack'),
    webpackConfig = require('./webpack.config.js'),
    app = express(),
-   port = process.env.PORT || 8080,
    cors = require('cors');
-// app.use(cors());
-//enables cors
+const PropertiesReader = require('properties-reader');
+const appProperties = PropertiesReader('./application.properties')._properties;
+const port = appProperties.PORT;
+
 app.use(cors({
    'allowedHeaders': ['sessionId', 'Content-Type'],
    'exposedHeaders': ['sessionId'],
