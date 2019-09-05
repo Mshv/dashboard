@@ -1,0 +1,7 @@
+export const AUTH_USER = 'AUTH_USER';
+export const AUTH_PASSWORD = 'AUTH_PASSWORD';
+export const AUTH_TOKEN = 'AUTH_TOKEN';
+export const AUTH_AUTHENTICATED = 'AUTH_AUTHENTICATED';
+export const AUTH_ROLES = 'AUTH_ROLES';
+export const AUTH_LOG_OUT = 'AUTH_LOG_OUT';
+export const AUTH_OPEN_MODAL_LOGIN_ERROR = 'AUTH_OPEN_MODAL_LOGIN_ERROR';
