@@ -17,7 +17,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Axios from "axios";
 import { connect } from 'react-redux';
 import {
   AUTH_USER,
@@ -27,9 +26,7 @@ import {
   AUTH_TOKEN,
   AUTH_ROLES
 } from '../../../constants/ActionTypes';
-import Auth from "./AuthService";
 import AuthService from "./AuthService";
-import { login } from ".";
 
 
 const styles = (theme: Theme) =>
@@ -91,20 +88,20 @@ class SignIn extends React.Component<any, any> {
 
   handleFormSubmit = async formSubmitEvent => {
     formSubmitEvent.preventDefault();
-    // if (await AuthService.isUserAuthenticated(this.props)) { 
-      let response:any = await login(this.props);
-      if (response !== null) { 
-      // console.log("Signin - AuthService.isUserAuthenticated(this.props) : " );
-      this.props.authToken(response.data.token);
-      this.props.isAuthenticated(response.data.user.status === 'active' ? true : false);
-      for (const [index, value] of response.data.user.roles.entries()) {
-        this.props.setRoles(value.name);
-      }
     this.props.history.push("/dashboard");
-    } else {
-    formSubmitEvent.preventDefault(); //this function is used to stop the page refresh
-    this.props.openModal(true);
-       }
+    // let response:any = await AuthService.login(this.props);
+    // if (response !== null) { 
+    // this.props.authToken(response.data.token);
+    // this.props.isAuthenticated(response.data.user.status === 'active' ? true : false);
+    // for (const [index, value] of response.data.user.roles.entries()) {
+    //   this.props.setRoles(value.name);
+    // }
+    // this.props.history.push("/dashboard");
+    // } else {
+    // formSubmitEvent.preventDefault(); //this function is used to stop the page refresh
+    // this.props.openModal(true);
+    //    }
+      
 };
 
 

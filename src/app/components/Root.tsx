@@ -6,7 +6,7 @@ import PrivateRoute from "./auth/PrivateRoute";
 import Dashboard from "./layout/Dashboard";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
-import Auth from "./auth/AuthService";
+import Auth from "./auth/AuthService2";
 
 class Root extends React.Component<any,any> {
 // class Root extends Component {

@@ -1,24 +1,11 @@
 import * as React from "react";
 import { Route, Redirect  } from "react-router-dom";
 // import AuthService from './AuthService';
-import { login } from "./AuthService";
 import { connect } from 'react-redux';
 import { AUTH_AUTHENTICATED, AUTH_ROLES, AUTH_TOKEN } from '../../../constants/ActionTypes';
 const jwtDecode = require('jwt-decode');
-// const fakeAuth = {
-//   isAuthenticated: false,
-//   authenticate(cb) {
-//     this.isAuthenticated = true
-//     setTimeout(cb, 100)
-//   },
-//   signout(cb) {
-//     this.isAuthenticated = false
-//     setTimeout(cb, 100)
-//   }
-// }
 
-// function PrivateRoute({ component: Component, isAuthenticated, ...rest }) {
-  function PrivateRoute({ component: Component, sendProps, ...rest }) {
+function PrivateRoute({ component: Component, sendProps, ...rest }) {
     console.log(" PrivateRoute: ");
     console.log(sendProps);
 
@@ -58,12 +45,11 @@ const isAuthenticated = function () {
   if (currTime < expiryTime) {
     return true;
   }
-  this.clearToken();
+  clearToken();
   return false;
 }
 
-
-clearToken = () => {
+const clearToken = function () {
   this.jwtToken = "";
   // StorageService.remove(AUTH_TOKEN);
   this.props.authToken("");
@@ -93,13 +79,9 @@ clearToken = () => {
 
     return (
       <Route {...rest} render={ props => 
-        // (AuthService.isUserAuthenticated(sendProps))
-        // this.authenticate(sendProps)
-        isAuthenticated()
-        // handle(sendProps)
+        true //isAuthenticated()
         ? <Component {...props} /> 
         : props.history.push("/") //<Redirect to="/login" />
-        // : <Redirect to="/" />
         }
       />
     );

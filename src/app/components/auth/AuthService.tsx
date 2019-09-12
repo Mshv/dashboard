@@ -1,5 +1,7 @@
 import axios from "axios";
 
+
+class AuthService {
 // const TOKEN_KEY = 'jwt';
 
 // export const login = () => {
@@ -10,10 +12,8 @@ import axios from "axios";
 //   localStorage.removeItem(TOKEN_KEY);
 // }
 
-// export const async login = (props) => {
-  // export const login = async (props) => {
-export const login = async (props): Promise<any> => {
-  // export const login = (props) => {
+/*
+static  login = async (props): Promise<any> => {
 console.log(" Satrting in login() method ... ");
 console.log(props);
 const sendData = {
@@ -37,6 +37,8 @@ try {
   console.log("ERR ", error.response);
   return error.response;
 }
+}
+*/
 
 // Axios
 // .post(process.env.POST_AUTH_CALL, sendData)
@@ -52,9 +54,9 @@ try {
 // .catch(function(error) {
 //   console.log(error);
 // });
-
-
 }
+
+export default AuthService;
 
 
 

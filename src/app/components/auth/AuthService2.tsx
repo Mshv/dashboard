@@ -56,20 +56,16 @@ import { any } from "prop-types";
   // };
 
 
-  // static getToken = async (): Promise<string> => {
-    
+    /*
     static async isUserAuthenticated (props) {
-
       console.log(" AuthService - isUserAuthenticated");
-    console.log(props);
-
+      console.log(props);
       const sendData = {
         username: props.userName,
         password: props.password,
         token:props.token
       };
     console.log(" sendData isUserAuthenticated : ", sendData);
-
     axios
     .post(process.env.POST_AUTH_CALL, sendData)
     .then(response => {
@@ -93,6 +89,7 @@ import { any } from "prop-types";
       console.log(error);
     });
   }
+*/
   render() {
     return null;
   }
