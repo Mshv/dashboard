@@ -37,6 +37,9 @@ import Configuration from "../Configuration";
 import PrivateRoute from "../auth/PrivateRoute";
 import Logout from "../auth/Logout";
 import UserRolePrivilage from "../SuperAdministratorView/UserRolePrivilage";
+import ManagePIIType from "../SuperAdministratorView/ManagePIIType";
+import { connect } from 'react-redux';
+import ManagePIITypeList from "../SuperAdministratorView/ManagePIITypeList";
 
 
 const drawerWidth = 240;
@@ -134,7 +137,7 @@ class ClippedDrawer extends React.Component<any, any> {
           <Toolbar>
 
             <Typography variant="h6" color="inherit" noWrap>
-              Data Annonymization
+              Data Anonymization
               {/* <Button color="inherit" id="login" onClick={this.handleFormLogout} className={classes.menuButton}>Logout</Button> */}
             </Typography>
 
@@ -184,6 +187,16 @@ class ClippedDrawer extends React.Component<any, any> {
                 <Apps style={{color: 'green'}} />
               </ListItemIcon>
               <ListItemText primary="PII Setting" />
+            </ListItem>
+
+            <ListItem
+              component={props => <Link to="/ManagePIITypeList" {...props} />}
+              button
+            >
+              <ListItemIcon>
+                <Apps style={{color: 'pink'}} />
+              </ListItemIcon>
+              <ListItemText primary="Manage PII Type" />
             </ListItem>
 
             <ListItem
@@ -252,54 +265,26 @@ class ClippedDrawer extends React.Component<any, any> {
         <main className={classes.content} >
           <div className={classes.toolbar} />
           <Switch>
-            <PrivateRoute path="/dataSourceList"   component={DataSourceList} sendProps={this.props.sendProps}/>
-            <PrivateRoute path="/dataSource"       component={DataSource}     sendProps={this.props.sendProps} />
-            <PrivateRoute path="/dataSource/:dsId" component={DataSource}     sendProps={this.props.sendProps}/>
-            <PrivateRoute path="/PIISettingList"   component={PIISettingList} sendProps={this.props.sendProps}/>
-            <PrivateRoute path="/PIISetting"       component={PIISetting}     sendProps={this.props.sendProps}/>
-            <PrivateRoute path="/configuration"    component={Configuration}  sendProps={this.props.sendProps}/>
-            <PrivateRoute path="/job"              component={Job}            sendProps={this.props.sendProps}/>
-            <PrivateRoute path="/jobList"          component={JobList}        sendProps={this.props.sendProps}/>
-            <PrivateRoute path="/userRolePrivilage"component={UserRolePrivilage} sendProps={this.props.sendProps}/>
-            <PrivateRoute path="/systemLogs"       component={SystemLogs}     sendProps={this.props.sendProps}/>
-            <PrivateRoute path="/logout"           component={Logout}/>
-            <Route path="/home" exact component={Home} />
-            <Route path="/" exact component={SignIn} />
+            <PrivateRoute path="/dataSourceList"          component={DataSourceList}    sendProps={this.props.sendProps}/>
+            <PrivateRoute path="/dataSource"              component={DataSource}        sendProps={this.props.sendProps} />
+            <PrivateRoute path="/dataSource/:dsId"        component={DataSource}        sendProps={this.props.sendProps}/>
+            <PrivateRoute path="/PIISettingList"          component={PIISettingList}    sendProps={this.props.sendProps}/>
+            <PrivateRoute path="/ManagePIITypeList"       component={ManagePIITypeList} sendProps={this.props.sendProps}/>
+            <PrivateRoute path="/ManagePIIType"           component={ManagePIIType}     sendProps={this.props.sendProps}/>
+            <PrivateRoute path="/ManagePIIType/:piiTypeId"component={ManagePIIType}     sendProps={this.props.sendProps}/>
+            <PrivateRoute path="/PIISetting"              component={PIISetting}        sendProps={this.props.sendProps}/>
+            <PrivateRoute path="/configuration"           component={Configuration}     sendProps={this.props.sendProps}/>
+            <PrivateRoute path="/job"                     component={Job}               sendProps={this.props.sendProps}/>
+            <PrivateRoute path="/jobList"                 component={JobList}           sendProps={this.props.sendProps}/>
+            <PrivateRoute path="/userRolePrivilage"       component={UserRolePrivilage} sendProps={this.props.sendProps}/>
+            <PrivateRoute path="/systemLogs"              component={SystemLogs}        sendProps={this.props.sendProps}/>
+            <PrivateRoute path="/logout"                  component={Logout}/>
+            <Route        path="/home"   exact            component={Home} />
+            <Route        path="/"       exact            component={SignIn} />
           </Switch>
-          {/* <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
-          facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
-          gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id
-          donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-          adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras.
-          Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis
-          imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget
-          arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-          donec massa sapien faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-          facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-          tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-          consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed
-          vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in. In
-          hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et
-          tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin
-          nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas
-          accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography> */}
         </main>
       </div>
     );
   }
 }
-
-
-
-// ClippedDrawer.propTypes = {
-//   classes: PropTypes.object.isRequired,
-// };
 export default withStyles(styles)(ClippedDrawer);
-// export default withStyles(styles)(connect(mapStateToProps)(ClippedDrawer));
-
