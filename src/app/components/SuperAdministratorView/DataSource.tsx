@@ -244,6 +244,29 @@ console.log(" process.env.NODE_ENV : ", process.env.NODE_ENV);
     );
   };
 
+  async loadDatabaseTemplate(selectedDataSourceType) {
+    const sendData = {
+      event: {},
+      data: {
+        categoryId: this.state.selectedDataSourceCategory,
+        typeId: selectedDataSourceType,
+      }
+    };
+    console.log("loadDatabaseTemplate");
+    console.log(sendData);
+    await axios
+      .post(process.env.POST_DATASOURCE_TEMPLATE, sendData)
+      .then(response => {
+        console.log(response.data.data);
+        this.setState({ driver:  response.data.data });
+        this.setState({ protocol:  response.data.data });
+        this.setState({ port:  response.data.data });
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  }
+
   handleChange = name => event => {
     let value = event.target.value;
     console.log("event.target.value: " + value);
@@ -254,6 +277,9 @@ console.log(" process.env.NODE_ENV : ", process.env.NODE_ENV);
     switch(name) {
       case 'dataSourceName':
         this.setState({ hasErrorDataSourceName: false });
+        return;
+      case 'selectedDataSourceType':
+        this.loadDatabaseTemplate(value);       
         return;
       case 'warning':
         return;
