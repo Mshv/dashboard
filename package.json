@@ -47,7 +47,7 @@
     "react-text-mask": "^5.4.3",
     "react-validation-framework": "^5.0.0",
     "reactstrap": "^7.1.0",
-    "recharts": "^1.4.2",
+    "recharts": "^2.1.14",
     "redux": "^4.0.1",
     "redux-auth-wrapper": "^2.1.0",
     "redux-rest-resource": "^0.20.1",
